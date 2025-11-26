@@ -5,7 +5,14 @@
     "title": "Aula 1: Introdução à Pesquisa Operacional",
     "description": "Aula introdutória sobre os conceitos básicos de Pesquisa Operacional e Programação Linear.",
     "topics": "Definição de PO, Fases de um estudo em PO e Introdução a Programação Linear.",
-    "slidesUrl": "https://link-para-os-slides/aula01.pdf"
+    "slidesUrl": [
+      {
+        "title": "Slides - Introdução a PO",
+        "url": "../assets/slides/po1/introducao-po.ppt"
+        }
+      ],
+      "subVideos": null
+
   },
   {
     "id": 2,
@@ -13,7 +20,7 @@
     "title": "Aula 02: Resolução Gráfica de PPL",
     "description": "Aprendemos a resolver problemas de duas variáveis de forma gráfica e damos os primeiros passos no método Simplex.",
     "topics": "Resolver PPLs com duas variáveis de decisão pelo método gráfico.",
-    "slidesUrl": "https://link-para-os-slides/aula02.pdf"
+    "slidesUrl": null
   },
   {
     "id": 3,
@@ -47,7 +54,17 @@
     "title": "Aula 04: Equivalência entre PPLs e Modelagem Matemática de PPL",
     "description": "Aprender a fazer a formulação de problemas de programação linear",
     "topics": "Equivalencia entre PPLs e Modelagem Matemática de PPL",
-    "slidesUrl": null,
+    "slidesUrl": [
+      {
+        "title": "Slides - Equivalência",
+        "url": "../assets/slides/po1/equivalencia-ppls.pptx"
+      },
+      {
+        "title": "Slides - Modelagem",
+        "url": "../assets/slides/po1/modelagem-matematica-ppls.pptx"
+      }
+    ],
+
     "subVideos": [
       {
         "title": "Equivalencia",
@@ -65,8 +82,13 @@
     "title": "Aula 05: Algoritmo Simplex",
     "description": "Aprender resolução de PPL pelo algoritmo simplex.",
     "topics": "Algoritmo Simplex, Tabelas Simplex, Método Simplex.",
-    "slidesUrl": null,
-    "subVideos": null
+    "slidesUrl": [
+      {
+        "title": "Slides - Simplex",
+        "url": "../assets/slides/po1/simplex.pptx"
+        }
+      ],
+      "subVideos": null
   },
   {
     "id": 6,
@@ -74,8 +96,13 @@
     "title": "Aula 06: Método Big-M",
     "description": "Aprender método para resolver qualquer tipo de PPL.",
     "topics": "Método Big-M, PPLs, Resolução de PPLs.",
-    "slidesUrl": null,
-    "subVideos": null
+    "slidesUrl": [
+      {
+        "title": "Slides - Big-M",
+        "url": "../assets/slides/po1/big-m.pptx"
+        }
+      ],
+      "subVideos": null
   },
   {
     "id": 7,

@@ -40,16 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
             // Cria o HTML para cada aula
             lessons.forEach(lesson => {
                 
-                // --- 1. Prepara o HTML dos Materiais ---
-                const materialHtml = (lesson.slidesUrl && lesson.slidesUrl.trim() !== "")
-                    ? `<div class="material-item">
-                           <a href="${lesson.slidesUrl}" target="_blank">
-                               <i data-lucide="file-text"></i>
-                               <span>Slides da Aula / Material de Apoio</span>
-                           </a>
-                       </div>`
-                    : '<p>Nenhum material de apoio disponível para esta aula.</p>';
+                // --- 1. Prepara o HTML dos Materiais (INTELIGENTE) ---
+                let materialHtml = '';
 
+                if (Array.isArray(lesson.slidesUrl)) {
+                    // CASO 1: É UMA LISTA DE ARQUIVOS (Como na Aula 04)
+                    lesson.slidesUrl.forEach(file => {
+                        materialHtml += `
+                            <div class="material-item">
+                                <a href="${file.url}" target="_blank" download>
+                                    <i data-lucide="file-text"></i>
+                                    <span>${file.title}</span>
+                                </a>
+                            </div>`;
+                    });
+                } else if (lesson.slidesUrl && lesson.slidesUrl.trim() !== "") {
+                    // CASO 2: É UM LINK ÚNICO (Como nas outras aulas)
+                    materialHtml = `
+                        <div class="material-item">
+                            <a href="${lesson.slidesUrl}" target="_blank" download>
+                                <i data-lucide="file-text"></i>
+                                <span>Slides da Aula / Material de Apoio</span>
+                            </a>
+                        </div>`;
+                } else {
+                    // CASO 3: NÃO TEM MATERIAL
+                    materialHtml = '<p>Nenhum material de apoio disponível para esta aula.</p>';
+                }
+                
                 // --- 2. Prepara o HTML do Conteúdo de Vídeo (com a nova lógica) ---
                 let videoContentHtml = '';
                 
