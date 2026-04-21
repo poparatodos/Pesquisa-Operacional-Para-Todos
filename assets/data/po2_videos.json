@@ -5,6 +5,48 @@
     "title": "Aula 1: Introdução à Pesquisa Operacional",
     "description": "Aula introdutória sobre os conceitos básicos de Pesquisa Operacional e Programação Linear.",
     "topics": "Definição de PO, Fases de um estudo em PO e Introdução a Programação Linear.",
-    "slidesUrl": "https://link-para-os-slides/aula01.pdf"
+    "slidesUrl": "https://link-para-os-slides/aula01.pdf",
+    "subVideos": null
+  },
+  {
+    "id": 8,
+    "youtubeId": null,
+    "title": "Aula 8: Programação Inteira",
+    "description": "Aula sobre os conceitos, modelagem e métodos de resolução de problemas de Programação Inteira.",
+    "topics": "Introdução à Programação Inteira, Modelos de Programação Inteira, Métodos de resolução.",
+    "slidesUrl": [
+      {
+        "title": "Slides - Programação Inteira",
+        "url": "../assets/slides/po2/Programa%C3%A7%C3%A3o%20Inteira.pptx"
+      }
+    ],
+    "subVideos": [
+      {
+        "title": "Parte 1",
+        "youtubeId": "WZDdKfCHDzU"
+      },
+      {
+        "title": "Parte 2",
+        "youtubeId": "omPq4A__ujI"
+      },
+      {
+        "title": "Parte 3",
+        "youtubeId": "CqOF1SoOATQ"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "youtubeId": "97jdCupjz-0",
+    "title": "Aula 9: Programação Não Linear",
+    "description": "Aula sobre os conceitos e métodos de resolução de problemas de Programação Não Linear.",
+    "topics": "Introdução à Programação Não Linear, Modelos de Programação Não Linear, Métodos de resolução.",
+    "slidesUrl": [
+      {
+        "title": "Slides - Programação Não Linear",
+        "url": "../assets/slides/po2/Programa%C3%A7%C3%A3o%20N%C3%A3o%20Linear.pptx"
+      }
+    ],
+    "subVideos": null
   }
 ]
