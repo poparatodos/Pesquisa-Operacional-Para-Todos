@@ -2,13 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
-    --unirio-blue: #003366;
-    --secondary-blue: #005A9C;
-    --light-bg: #F8F9FA;
-    --dark-text: #343A40;
-    --highlight-color: #FFC107;
-    --menu-width: 250px;
-    --menu-width-collapsed: 60px;
+    /* Dark identity (hero, navbar, footer) */
+    --color-bg-dark:    #1C1C1C;
+    --color-bg-mid:     #2A2A2A;
+    /* Lime green accent */
+    --color-green:      #A8D05A;
+    --color-green-dim:  #7BA040;
+    /* Light content areas */
+    --color-bg-light:   #F8F9FA;
+    --color-surface:    #FFFFFF;
+    /* Text */
+    --color-text-light: #FFFFFF;
+    --color-text-muted: #AAAAAA;
+    --color-text-dark:  #343A40;
+    /* Institutional */
+    --unirio-blue:      #003366;
+    --secondary-blue:   #005A9C;
+    /* Navbar height — usado para padding-top das seções */
+    --navbar-height:    64px;
 }
 
 * {
