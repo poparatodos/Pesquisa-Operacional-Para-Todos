@@ -112,10 +112,14 @@
     "topics": "Dualidade, Teoria da Dualidade, Teoremas da Dualidade, TFC.",
     "slidesUrl": [
       {
-        "title": "Slides - Dualidade",
-        "url": "../assets/slides/po1/dualidade.pptx"
-        }
-      ],
+        "title": "Slides - Dualidade Parte 1",
+        "url": "../assets/slides/po1/dualidade_parte%201.pptx"
+      },
+      {
+        "title": "Slides - Dualidade Parte 2",
+        "url": "../assets/slides/po1/Dualidade%20pt.2.pptx"
+      }
+    ],
     "subVideos": [
       {
         "title": "Dualidade pt.1",
@@ -150,7 +154,12 @@
     "title": "Aula 09: Análise de Sensibilidade e Pós-otimização Com Solver",
     "description": "Analisar alterações no PPL e usar o software Solver para fazer análise de sensibilidade.",
     "topics": "Análise de Sensibilidade, Pós-otimização, Software de PPL.",
-    "slidesUrl": null,
+    "slidesUrl": [
+      {
+        "title": "Slides - Análise de Sensibilidade",
+        "url": "../assets/slides/po1/An%C3%A1lise%20de%20Sensibilidade%202025.pptx"
+      }
+    ],
     "subVideos": [
       {
         "title": "Análise de Sensibilidade e Pós-otimização pt.1",
