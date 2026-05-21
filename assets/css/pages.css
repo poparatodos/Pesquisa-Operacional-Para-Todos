@@ -127,7 +127,7 @@
 
 .lesson-details h4 {
     font-size: 1.1rem;
-    color: var(--dark-text);
+    color: var(--color-text-dark);
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
@@ -166,7 +166,7 @@
 .material-section h4 {
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: var(--dark-text);
+    color: var(--color-text-dark);
 }
 
 .material-item {
