@@ -555,35 +555,68 @@ body {
 
 
 /* ==========================================================================
-   ESTILOS PARA DISPOSITIVOS MÓVEIS (COM CORREÇÃO FINAL)
+   RESPONSIVIDADE MOBILE
    ========================================================================== */
 
 @media (max-width: 768px) {
 
-    /* --- Cabeçalho e Corpo --- */
-    body {
-        padding-top: 0px; 
-    }
-    .main-header {
-        height: 60px;
-        padding: 0 15px;
-    }
-    .header-title {
-        margin-left: 10px;
-        font-size: 1rem;
+    /* Navbar: mostrar hamburguer, esconder links */
+    .navbar__links { display: none; }
+
+    .navbar__toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    /* --- Outros Ajustes --- */
-    #sobre .section-title {
-        font-size: 1.5rem;
+    /* Hero */
+    .hero {
+        min-height: 80vh;
+        padding-top: calc(var(--navbar-height) + 1rem);
     }
-    #sobre p {
-        font-size: 0.95rem;
+
+    .hero__graph {
+        width: 85%;
+        right: -40px;
+        opacity: 0.10;
     }
-    .about-features-list li {
-        gap: 10px;
+
+    .hero__logos {
+        gap: 1rem;
+        margin-bottom: 1.5rem;
     }
-    .team-grid {
-        grid-template-columns: 1fr;
+
+    .hero__logo { max-height: 50px; }
+    .hero__logo--proex { max-height: 36px; }
+
+    .hero__ctas {
+        flex-direction: column;
+        align-items: center;
     }
+
+    .hero__ctas .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    /* Sections */
+    .section { padding: 3rem 1rem; }
+    .section__title { font-size: 1.6rem; }
+
+    /* Cards */
+    .content-cards { grid-template-columns: 1fr; }
+
+    /* Team */
+    .team-grid { grid-template-columns: 1fr; }
+
+    /* Footer */
+    .footer__inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar__brand span { display: none; }
 }
