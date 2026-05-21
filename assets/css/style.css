@@ -105,23 +105,25 @@ body {
 
 .navbar__links a.active { color: var(--color-green); }
 
-.navbar__github-btn {
-    display: flex !important;
+.navbar__links a.navbar__github-btn,
+.navbar__dropdown ul a.navbar__github-btn {
+    display: flex;
     align-items: center;
     gap: 0.4rem;
-    background-color: transparent !important;
-    color: var(--color-green) !important;
-    border: 1.5px solid var(--color-green) !important;
-    border-radius: 6px !important;
-    padding: 0.4rem 0.9rem !important;
+    background-color: transparent;
+    color: var(--color-green);
+    border: 1.5px solid var(--color-green);
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
     margin-left: 0.5rem;
-    font-weight: 600 !important;
-    transition: background-color 0.2s, color 0.2s !important;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-.navbar__github-btn:hover {
-    background-color: var(--color-green) !important;
-    color: var(--color-bg-dark) !important;
+.navbar__links a.navbar__github-btn:hover,
+.navbar__dropdown ul a.navbar__github-btn:hover {
+    background-color: var(--color-green);
+    color: var(--color-bg-dark);
 }
 
 .navbar__toggle {
@@ -177,8 +179,8 @@ body {
     background-color: rgba(255, 255, 255, 0.07);
 }
 
-.navbar__dropdown .navbar__github-btn {
-    margin-left: 0 !important;
+.navbar__dropdown ul a.navbar__github-btn {
+    margin-left: 0;
     margin-top: 0.5rem;
 }
 
