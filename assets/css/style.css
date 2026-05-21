@@ -32,94 +32,166 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--light-bg);
     color: var(--dark-text);
-    /* Deixa espaço para o menu colapsado */
-    /* padding-left: var(--menu-width-collapsed); */
     transition: padding-left 0.3s ease-in-out;
 }
 
-/* --- Menu Lateral --- */
-.side-menu {
+/* === NAVBAR === */
+.navbar {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 280px; /* Largura do menu quando aberto */
-    background-color: var(--unirio-blue);
-    color: white;
+    right: 0;
+    height: var(--navbar-height);
+    background-color: var(--color-bg-dark);
     z-index: 1000;
-    padding: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-    /* Comportamento inicial: ESCONDIDO para a esquerda */
-    transform: translateX(-100%);
-    transition: transform 0.4s ease-in-out; 
+    border-bottom: 1px solid rgba(168, 208, 90, 0.15);
 }
 
-body:has(.side-menu:hover) {
-    padding-left: var(--menu-width);
-}
-
-.side-menu:hover {
-    width: var(--menu-width);
-    align-items: flex-start;
-}
-
-.side-menu__brand {
+.navbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1rem;
-    margin-bottom: 2rem;
+    justify-content: space-between;
 }
 
-.side-menu__logo {
-    width: 40px;
-    height: 40px;
-}
-
-.side-menu__title {
-    opacity: 0;
-    transition: opacity 0.2s linear;
-}
-
-.side-menu:hover .side-menu__title {
-    opacity: 1;
-    transition-delay: 0.1s;
-    
-}
-
-.side-menu__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    /* Opcional: mantém o menu centralizado se você usou a Opção 2 anteriormente */
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-/* Estilo padrão para CADA link do menu */
-.side-menu__list a {
-    color: white; /* Cor do texto e do ícone */
+.navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.85rem;;
-    
-    /* --- ALINHAMENTO DO ÍCONE COM O TEXTO --- */
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Espaço entre o ícone e o texto */
-    
-    padding: 1rem 1.5rem;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Transição suave */
+    color: var(--color-text-light);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
 }
 
-/* EFEITO AO PASSAR O MOUSE (A CORREÇÃO PRINCIPAL ESTÁ AQUI) */
-.side-menu__list a:hover {
-    background-color: white;          /* O fundo do link fica BRANCO */
-    color: var(--unirio-blue);        /* O texto E o ícone ficam AZUIS */
+.navbar__brand:hover { color: var(--color-green); }
+
+.navbar__graph-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
 }
+
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    transition: color 0.2s, background-color 0.2s;
+    white-space: nowrap;
+}
+
+.navbar__links a:hover {
+    color: var(--color-text-light);
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+.navbar__links a.active { color: var(--color-green); }
+
+.navbar__github-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: transparent !important;
+    color: var(--color-green) !important;
+    border: 1.5px solid var(--color-green) !important;
+    border-radius: 6px !important;
+    padding: 0.4rem 0.9rem !important;
+    margin-left: 0.5rem;
+    font-weight: 600 !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+
+.navbar__github-btn:hover {
+    background-color: var(--color-green) !important;
+    color: var(--color-bg-dark) !important;
+}
+
+.navbar__toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--color-text-light);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.navbar__toggle:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+/* Mobile dropdown */
+.navbar__dropdown {
+    display: none;
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-dark);
+    border-bottom: 1px solid rgba(168, 208, 90, 0.2);
+    z-index: 999;
+    padding: 0.5rem 0 1rem;
+}
+
+.navbar__dropdown.open { display: block; }
+
+.navbar__dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 1rem;
+}
+
+.navbar__dropdown ul a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.9rem 0.75rem;
+    border-radius: 8px;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.navbar__dropdown ul a:hover {
+    color: var(--color-text-light);
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+.navbar__dropdown .navbar__github-btn {
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+}
+
+.navbar__backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: var(--navbar-height);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+.navbar__backdrop.open { display: block; }
 
 /* --- Conteúdo Principal e Banner --- */
 .main-content {
@@ -346,38 +418,6 @@ body:has(.side-menu:hover) {
     margin: 0 0.5rem;
 }
 
-/* --- Estilos para o Botão do Menu --- */
-.menu-toggle {
-    /* Suas propriedades existentes (position, z-index, background, etc.) */
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1100;
-    background: transparent;
-    color: white; /* Cor do ícone e do texto */
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-
-    /* --- ADIÇÕES PARA ALINHAMENTO E ESTILO --- */
-    display: flex;        /* Ativa o alinhamento flexível (lado a lado) */
-    align-items: center;  /* Centraliza verticalmente o ícone e o texto */
-    gap: 8px;             /* Cria um espaço de 8px entre o ícone e o texto */
-}
-
-/* Crie esta NOVA REGRA para estilizar o texto "Menu" */
-.menu-toggle span {
-    font-family: 'Poppins', sans-serif; /* Garante que a fonte seja a mesma do site */
-    font-size: 1.2rem;      /* Tamanho do texto (ajuste como preferir) */
-    font-weight: 500;       /* Deixa o texto com um peso médio (nem muito fino, nem negrito) */
-    
-    /* A cor do span será herdada do 'color: white' do .menu-toggle */
-}
-
-.menu-toggle:hover {
-    color: #cccccc; /* Um pequeno efeito para o hover, deixando o branco um pouco cinza */
-}
-
 .index-box {
     font-family: 'Poppins', sans-serif;
     margin-top: 20px;
@@ -392,29 +432,6 @@ body:has(.side-menu:hover) {
     align-items: center;
     text-align: center;
     text-decoration: none;
-}
-
-/* NOVA CLASSE: Estado do menu quando ABERTO */
-.side-menu--open {
-    transform: translateX(0); /* Move o menu para a posição visível */
-    box-shadow: 5px 0px 15px rgba(0,0,0,0.2);
-}
-
-/* Ajustes nos itens do menu para o novo layout */
-.side-menu__brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0 1.5rem; /* Aumentei o padding */
-    margin-bottom: 2rem;
-}
-.side-menu__logo {
-    width: 40px;
-    height: 40px;
-}
-.side-menu__list a {
-    padding: 1rem 1.5rem; /* Aumentei o padding */
-    /* ... o resto dos estilos de 'a' continuam os mesmos ... */
 }
 
 /* --- Estilos para a Seção "Sobre o Projeto" --- */
