@@ -1,14 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Seleciona o botão e o menu no HTML
-    const menuToggle = document.querySelector('.menu-toggle');
-    const sideMenu = document.querySelector('.side-menu');
+    const toggle = document.querySelector('.navbar__toggle');
+    const dropdown = document.querySelector('.navbar__dropdown');
+    const backdrop = document.querySelector('.navbar__backdrop');
 
-    // Verifica se os dois elementos existem na página antes de continuar
-    if (menuToggle && sideMenu) {
-        // Adiciona um "ouvinte de evento" que espera por um clique no botão
-        menuToggle.addEventListener('click', () => {
-            // A cada clique, ele ADICIONA ou REMOVE a classe 'side-menu--open' do menu
-            sideMenu.classList.toggle('side-menu--open');
-        });
+    if (!toggle || !dropdown || !backdrop) return;
+
+    function openMenu() {
+        dropdown.classList.add('open');
+        backdrop.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
     }
+
+    function closeMenu() {
+        dropdown.classList.remove('open');
+        backdrop.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', () => {
+        dropdown.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    backdrop.addEventListener('click', closeMenu);
+
+    dropdown.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
 });
