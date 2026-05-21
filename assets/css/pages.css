@@ -8,13 +8,10 @@
 
 /* --- Banner da Página (PO1, PO2) --- */
 .page-banner {
-    /* Reutiliza a animação e o fundo do banner principal */
     position: relative;
     overflow: hidden;
     color: white;
-    background-image: url('../assets/images/background.jpg');
-    background-size: cover;
-    background-position: center;
+    background-color: var(--color-bg-dark);
     padding: 4rem 2rem;
     text-align: center;
 }
@@ -24,10 +21,10 @@
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(-45deg, #0a0a0a, #1C1C1C, #003366, #005A9C);
+    background: linear-gradient(-45deg, #0a0a0a, #1C1C1C, #182c08, #2d5010);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-    opacity: 0.92;
+    opacity: 1;
 }
 
 /* Camada do grafo (igual ao .hero-banner) */
