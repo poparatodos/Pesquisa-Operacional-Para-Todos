@@ -3,151 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PO para Todos</title>
+    <title>PO para Todos — UNIRIO</title>
     <link rel="icon" type="image/png" href="assets/images/logos/logo_u_unirio.png">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
-    
-    <button class="menu-toggle" aria-label="Abrir menu">
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-    </svg>
-    <span>Menu</span>
-</button>
-
-    <nav class="side-menu">
-        <ul class="side-menu__list">
-            <li><a href="pages/po1.html"><i data-lucide="book-open"></i> Pesquisa Operacional I</a></li>
-            <li><a href="pages/po2.html"><i data-lucide="book-open-check"></i> Pesquisa Operacional II</a></li>
-            <li><a href="pages/problemas-classicos.html"><i data-lucide="puzzle"></i> Problemas Clássicos</a></li>
-        </ul>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__brand">
+                <svg class="navbar__graph-icon" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="6"  cy="6"  r="4"   fill="#A8D05A"/>
+                    <circle cx="6"  cy="18" r="3"   fill="#A8D05A"/>
+                    <circle cx="6"  cy="30" r="3.5" fill="#A8D05A"/>
+                    <circle cx="16" cy="12" r="5"   fill="#A8D05A"/>
+                    <line x1="6" y1="6"  x2="16" y2="12" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="6" y1="6"  x2="6"  y2="18" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="6" y1="18" x2="16" y2="12" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="6" y1="18" x2="6"  y2="30" stroke="#A8D05A" stroke-width="1.5"/>
+                    <circle cx="26" cy="8"  r="3.5" fill="#A8D05A"/>
+                    <circle cx="32" cy="18" r="4"   fill="#A8D05A"/>
+                    <circle cx="26" cy="28" r="3.5" fill="#A8D05A"/>
+                    <circle cx="20" cy="18" r="3"   fill="#A8D05A"/>
+                    <line x1="26" y1="8"  x2="32" y2="18" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="32" y1="18" x2="26" y2="28" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="26" y1="28" x2="20" y2="18" stroke="#A8D05A" stroke-width="1.5"/>
+                    <line x1="20" y1="18" x2="26" y2="8"  stroke="#A8D05A" stroke-width="1.5"/>
+                </svg>
+                <span>PO para Todos</span>
+            </a>
+            <ul class="navbar__links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/po1.html">PO I</a></li>
+                <li><a href="pages/po2.html">PO II</a></li>
+                <li><a href="pages/problemas.html">Problemas Clássicos</a></li>
+                <li>
+                    <a href="https://github.com/poparatodos/Pesquisa-Operacional-Para-Todos"
+                       class="navbar__github-btn" target="_blank" rel="noopener noreferrer">
+                        <i data-lucide="github"></i> GitHub
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar__toggle" aria-label="Abrir menu" aria-expanded="false">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
     </nav>
 
-    <header class="hero-banner">
-    
-    <div class="hero-banner__logo-container">
-        <img src="assets/images/logos/novo logo unirio - horizontal negativo.png" alt="Logo UNIRIO" class="hero-banner__logo">
-        <img src="assets/images/logos/Logo proexc.jpg" alt="Logo Pró-Reitoria de Extensão" class="hero-banner__logo hero-banner__logo--proex">    
-    </div>
-
-    <h1>Pesquisa Operacional Para Todos</h1>
-    <p>Levando a Pesquisa Operacional além da sala de aula</p>
-    </header>
-
-        <section id="carousel-container" class="carousel">
-
-            <div class="carousel-indicators">
-            </div>
-        
-            <div class="carousel-slides">
-    
-    <article id="sobre" class="carousel-slide active-slide">
-        <h2 class="section-title">📖 Sobre o Projeto</h2>
-        <p>O Projeto de Extensão em Pesquisa Operacional nasceu com o objetivo de democratizar o acesso ao conhecimento dessa disciplina fundamental da Engenharia de Produção e de áreas correlatas. A iniciativa busca aproximar a universidade da comunidade acadêmica e do público em geral, oferecendo conteúdos didáticos em formato acessível, atualizado e gratuito.</p>
-        <p>Aqui você encontrará:</p>
-        <ul class="about-features-list">
+    <div class="navbar__dropdown" aria-hidden="true">
+        <ul>
+            <li><a href="index.html"><i data-lucide="home"></i> Home</a></li>
+            <li><a href="pages/po1.html"><i data-lucide="book-open"></i> Pesquisa Operacional I</a></li>
+            <li><a href="pages/po2.html"><i data-lucide="book-open-check"></i> Pesquisa Operacional II</a></li>
+            <li><a href="pages/problemas.html"><i data-lucide="puzzle"></i> Problemas Clássicos</a></li>
             <li>
-                <i data-lucide="layers"></i>
-                <span><strong>Materiais organizados</strong> das disciplinas PO1 e PO2, com aulas em vídeo e apoio em textos e exercícios.</span>
-            </li>
-            <li>
-                <i data-lucide="puzzle"></i>
-                <span><strong>Explicações de problemas clássicos</strong> da Pesquisa Operacional, com exemplos práticos.</span>
-            </li>
-            <li>
-                <i data-lucide="code-2"></i>
-                <span><strong>Algoritmos implementados em Python</strong>, prontos para download e aplicação.</span>
-            </li>
-            <li>
-                <i data-lucide="users"></i>
-                <span>Um <strong>espaço de integração</strong> com as redes sociais do projeto e com a equipe de estudantes que o desenvolve.</span>
+                <a href="https://github.com/poparatodos/Pesquisa-Operacional-Para-Todos"
+                   class="navbar__github-btn" target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="github"></i> GitHub
+                </a>
             </li>
         </ul>
-        <p>Nosso propósito é tornar o ensino de Pesquisa Operacional mais interativo, aberto e inclusivo, contribuindo para a formação de novos profissionais e ampliando o alcance da extensão universitária.</p>
-    </article>
-    
-    <article id="redes" class="carousel-slide">
-    <h2 class="section-title instagram-title">
-        <i data-lucide="instagram"></i>
-        <span>Siga-nos</span>
-    </h2>
+    </div>
+    <div class="navbar__backdrop"></div>
 
-    <p>Acompanhe nosso conteúdo e novidades pelo Instagram!</p>
-    
-    <!-- <a href="https://www.instagram.com/pesquisaoperacionalparatodos#/" class="instagram-button" target="_blank">
-        <i data-lucide="instagram"></i>
-        <span>Ver no Instagram</span>
-    </a> -->
-
-    <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-86d3eb83-cd8c-4958-bda4-680712181bfe" data-elfsight-app-lazy></div>
-   
-    </article>
-    <article id="equipe" class="carousel-slide">
-    <h2 class="section-title">Nossa Equipe</h2>
-    
-    <div class="team-grid">
-        
-        <div class="team-card">
-            <img src="assets/images/team/andrea.jpg" alt="Foto de [Nome do Integrante 2]">
-            <h3>Andréa Bonifácio</h3>
-            <p>Doutora em Engenharia de Produção com Pós-doutorado na COPPE/UFRJ. Professora Associada da UNIRIO, leciona Pesquisa Operacional no curso de Engenharia de Produção e coordena o projeto de extensão "Pesquisa Operacional para todos".</p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/andr%C3%A9a-bonif%C3%A1cio-b718a994/" target="_blank" aria-label="LinkedIn de [Nome do Integrante 2]"><i data-lucide="linkedin"></i></a>
-                <a href="mailto:andreabonifacio@uniriotec.br" aria-label="Email de [Nome do Integrante 2]"><i data-lucide="mail"></i></a>
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+        <div class="hero__graph" aria-hidden="true">
+            <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                <!-- P -->
+                <line x1="60"  y1="50"  x2="60"  y2="300" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="60"  y1="50"  x2="160" y2="100" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="160" y1="100" x2="160" y2="175" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="160" y1="175" x2="60"  y2="175" stroke="#A8D05A" stroke-width="2"/>
+                <circle cx="60"  cy="50"  r="18" fill="#A8D05A"/>
+                <circle cx="60"  cy="175" r="14" fill="#A8D05A"/>
+                <circle cx="60"  cy="300" r="12" fill="#A8D05A"/>
+                <circle cx="160" cy="100" r="20" fill="#A8D05A"/>
+                <circle cx="160" cy="175" r="16" fill="#A8D05A"/>
+                <!-- O -->
+                <line x1="310" y1="50"  x2="420" y2="80"  stroke="#A8D05A" stroke-width="2"/>
+                <line x1="420" y1="80"  x2="460" y2="175" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="460" y1="175" x2="420" y2="270" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="420" y1="270" x2="310" y2="300" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="310" y1="300" x2="250" y2="270" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="250" y1="270" x2="210" y2="175" stroke="#A8D05A" stroke-width="2"/>
+                <line x1="210" y1="175" x2="250" y2="80"  stroke="#A8D05A" stroke-width="2"/>
+                <line x1="250" y1="80"  x2="310" y2="50"  stroke="#A8D05A" stroke-width="2"/>
+                <circle cx="310" cy="50"  r="16" fill="#A8D05A"/>
+                <circle cx="420" cy="80"  r="14" fill="#A8D05A"/>
+                <circle cx="460" cy="175" r="20" fill="#A8D05A"/>
+                <circle cx="420" cy="270" r="14" fill="#A8D05A"/>
+                <circle cx="310" cy="300" r="18" fill="#A8D05A"/>
+                <circle cx="250" cy="270" r="12" fill="#A8D05A"/>
+                <circle cx="210" cy="175" r="16" fill="#A8D05A"/>
+                <circle cx="250" cy="80"  r="10" fill="#A8D05A"/>
+            </svg>
+        </div>
+        <div class="hero__content">
+            <div class="hero__logos">
+                <img src="assets/images/logos/novo logo unirio - horizontal negativo.png"
+                     alt="Logo UNIRIO" class="hero__logo">
+                <img src="assets/images/logos/Logo proexc.jpg"
+                     alt="Logo Pró-Reitoria de Extensão" class="hero__logo hero__logo--proex">
+            </div>
+            <h1 class="hero__title">Pesquisa Operacional<br>Para Todos</h1>
+            <p class="hero__subtitle">Levando a Pesquisa Operacional além da sala de aula</p>
+            <div class="hero__ctas">
+                <a href="#content" class="btn btn--outline">Explorar Conteúdo ↓</a>
+                <a href="https://github.com/poparatodos/Pesquisa-Operacional-Para-Todos"
+                   class="btn btn--green" target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="github"></i> Ver no GitHub
+                </a>
             </div>
         </div>
+    </header>
 
-        <div class="team-card">
-            <img src="assets/images/team/lucas.jpg" alt="Foto de Lucas Motta">
-            <h3>Lucas Motta</h3>
-            <p><p>Graduando em Engenharia de Produção. Entusiasta de tecnologia e programação, voltado para dados. Equipe de Desenvolvimento do Site do Projeto.</p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/lucas-motta09/" target="_blank" aria-label="LinkedIn de Lucas Motta"><i data-lucide="linkedin"></i></a>
-                <a href="mailto:lucas.motta09@gmail.com" aria-label="Email de Lucas Motta"><i data-lucide="mail"></i></a>
+    <!-- ===== ACESSE O CONTEÚDO ===== -->
+    <section id="content" class="section section--light">
+        <div class="section__inner">
+            <h2 class="section__title">Acesse o Conteúdo</h2>
+            <div class="content-cards">
+                <a href="pages/po1.html" class="content-card">
+                    <i data-lucide="book-open" class="content-card__icon"></i>
+                    <h3>Pesquisa Operacional I</h3>
+                    <p>PPL, Simplex, Big-M, Dualidade e Análise de Sensibilidade.</p>
+                    <span class="content-card__link">Acessar →</span>
+                </a>
+                <a href="pages/po2.html" class="content-card">
+                    <i data-lucide="book-open-check" class="content-card__icon"></i>
+                    <h3>Pesquisa Operacional II</h3>
+                    <p>Programação Inteira, Não Linear e outros tópicos avançados.</p>
+                    <span class="content-card__link">Acessar →</span>
+                </a>
+                <a href="pages/problemas.html" class="content-card">
+                    <i data-lucide="puzzle" class="content-card__icon"></i>
+                    <h3>Problemas Clássicos</h3>
+                    <p>Problemas clássicos da PO com exemplos e soluções detalhadas.</p>
+                    <span class="content-card__link">Acessar →</span>
+                </a>
             </div>
         </div>
+    </section>
 
-        <div class="team-card">
-            <img src="assets/images/team/nathalia.jpeg" alt="Foto de nathalia">
-            <h3>Nathalia Ferreira</h3>
-            <p><p>Graduanda em Engenharia de Produção pela UNIRIO. Técnica em Petróleo e Gás pelo Instituto Federal Fluminense (IFF). Interessada em gestão de pessoas e análise de dados. Equipe de Desenvolvimento do Site do Projeto.</p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/nath%C3%A1lia-ferreira-b42745219/" target="_blank" aria-label="LinkedIn de nathalia"><i data-lucide="linkedin"></i></a>
-                <a href="mailto:nathaliaromeirof@gmail.com" aria-label="Email de nathalia"><i data-lucide="mail"></i></a>
+    <!-- ===== SOBRE O PROJETO ===== -->
+    <section id="sobre" class="section section--light section--border-top">
+        <div class="section__inner section__inner--narrow">
+            <h2 class="section__title">Sobre o Projeto</h2>
+            <p>O Projeto de Extensão em Pesquisa Operacional nasceu com o objetivo de democratizar o acesso ao conhecimento dessa disciplina fundamental da Engenharia de Produção e de áreas correlatas. A iniciativa busca aproximar a universidade da comunidade acadêmica e do público em geral, oferecendo conteúdos didáticos em formato acessível, atualizado e gratuito.</p>
+            <p>Aqui você encontrará:</p>
+            <ul class="about-features-list">
+                <li>
+                    <i data-lucide="layers"></i>
+                    <span><strong>Materiais organizados</strong> das disciplinas PO1 e PO2, com aulas em vídeo e apoio em textos e exercícios.</span>
+                </li>
+                <li>
+                    <i data-lucide="puzzle"></i>
+                    <span><strong>Explicações de problemas clássicos</strong> da Pesquisa Operacional, com exemplos práticos.</span>
+                </li>
+                <li>
+                    <i data-lucide="code-2"></i>
+                    <span><strong>Algoritmos implementados em Python</strong>, prontos para download e aplicação.</span>
+                </li>
+                <li>
+                    <i data-lucide="github"></i>
+                    <span><strong>Código aberto no GitHub</strong> — o site e os algoritmos estão disponíveis publicamente para estudo e contribuição.</span>
+                </li>
+                <li>
+                    <i data-lucide="users"></i>
+                    <span>Um <strong>espaço de integração</strong> com as redes sociais do projeto e com a equipe de estudantes que o desenvolve.</span>
+                </li>
+            </ul>
+            <p>Nosso propósito é tornar o ensino de Pesquisa Operacional mais interativo, aberto e inclusivo, contribuindo para a formação de novos profissionais e ampliando o alcance da extensão universitária.</p>
+        </div>
+    </section>
+
+    <!-- ===== CÓDIGO ABERTO ===== -->
+    <section id="github" class="section section--dark">
+        <div class="section__inner">
+            <div class="github-section">
+                <i data-lucide="github" class="github-section__icon"></i>
+                <h2>Código Aberto</h2>
+                <p>O site e os algoritmos em Python desenvolvidos pelo projeto estão disponíveis publicamente no GitHub. Explore, aprenda com o código e contribua.</p>
+                <a href="https://github.com/poparatodos/Pesquisa-Operacional-Para-Todos"
+                   class="btn btn--green" target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="github"></i> Ver repositório no GitHub
+                </a>
             </div>
         </div>
+    </section>
 
-        <div class="team-card">
-            <img src="assets/images/team/joao.jpeg" alt="Foto de JP">
-            <h3>João Meirelles</h3>
-            <p>Graduando em Engenharia de Produção. Interesse em Cultura Digital, transformação orientada por dados e entusiasta de  programação. Equipe de Criação das Vídeo Aulas.</p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/joao-pedro-meirelles-conceicao-/" target="_blank" aria-label="LinkedIn de JP"><i data-lucide="linkedin"></i></a>
-                <a href="mailto:joaopedrojotape@outlook.com" aria-label="Email de JP"><i data-lucide="mail"></i></a>
+    <!-- ===== NOSSA EQUIPE ===== -->
+    <section id="equipe" class="section section--light section--border-top">
+        <div class="section__inner">
+            <h2 class="section__title">Nossa Equipe</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="assets/images/team/andrea.jpg" alt="Foto de Andréa Bonifácio">
+                    <h3>Andréa Bonifácio</h3>
+                    <p>Doutora em Engenharia de Produção com Pós-doutorado na COPPE/UFRJ. Professora Associada da UNIRIO, leciona Pesquisa Operacional no curso de Engenharia de Produção e coordena o projeto de extensão "Pesquisa Operacional para todos".</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/andr%C3%A9a-bonif%C3%A1cio-b718a994/" target="_blank" aria-label="LinkedIn de Andréa"><i data-lucide="linkedin"></i></a>
+                        <a href="mailto:andreabonifacio@uniriotec.br" aria-label="Email de Andréa"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="assets/images/team/lucas.jpg" alt="Foto de Lucas Motta">
+                    <h3>Lucas Motta</h3>
+                    <p>Graduando em Engenharia de Produção. Entusiasta de tecnologia e programação, voltado para dados. Equipe de Desenvolvimento do Site do Projeto.</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/lucas-motta09/" target="_blank" aria-label="LinkedIn de Lucas"><i data-lucide="linkedin"></i></a>
+                        <a href="mailto:lucas.motta09@gmail.com" aria-label="Email de Lucas"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="assets/images/team/nathalia.jpeg" alt="Foto de Nathalia Ferreira">
+                    <h3>Nathalia Ferreira</h3>
+                    <p>Graduanda em Engenharia de Produção pela UNIRIO. Técnica em Petróleo e Gás pelo Instituto Federal Fluminense (IFF). Interessada em gestão de pessoas e análise de dados. Equipe de Desenvolvimento do Site do Projeto.</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/nath%C3%A1lia-ferreira-b42745219/" target="_blank" aria-label="LinkedIn de Nathalia"><i data-lucide="linkedin"></i></a>
+                        <a href="mailto:nathaliaromeirof@gmail.com" aria-label="Email de Nathalia"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="assets/images/team/joao.jpeg" alt="Foto de João Meirelles">
+                    <h3>João Meirelles</h3>
+                    <p>Graduando em Engenharia de Produção. Interesse em Cultura Digital, transformação orientada por dados e entusiasta de programação. Equipe de Criação das Vídeo Aulas.</p>
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/joao-pedro-meirelles-conceicao-/" target="_blank" aria-label="LinkedIn de João"><i data-lucide="linkedin"></i></a>
+                        <a href="mailto:joaopedrojotape@outlook.com" aria-label="Email de João"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-    </div> </article> 
+    <!-- ===== REDES SOCIAIS ===== -->
+    <section id="redes" class="section section--light section--border-top">
+        <div class="section__inner">
+            <h2 class="section__title">
+                <i data-lucide="instagram"></i> Siga-nos
+            </h2>
+            <p>Acompanhe nosso conteúdo e novidades pelo Instagram!</p>
+            <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-86d3eb83-cd8c-4958-bda4-680712181bfe" data-elfsight-app-lazy></div>
+        </div>
+    </section>
 
-</div>
-            
-            <button class="carousel-control prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="carousel-control next" onclick="moveSlide(1)">&#10095;</button>
-        </section>
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <p>&copy; 2025 Pesquisa Operacional Para Todos — UNIRIO</p>
+            <div class="footer__links">
+                <a href="https://github.com/poparatodos/Pesquisa-Operacional-Para-Todos"
+                   target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="github"></i> GitHub
+                </a>
+                <a href="https://www.instagram.com/pesquisaoperacionalparatodos"
+                   target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </footer>
 
-        <footer class="footer">
-            <p>&copy; 2025 Pesquisa Operacional Para Todos - UNIRIO. Todos os direitos reservados.</p>
-        </footer>
-    </main>
-
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/menu.js" defer></script> <script>
-        lucide.createIcons();
-    </script>
+    <script src="assets/js/menu.js" defer></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
