@@ -5,216 +5,42 @@
     "title": "Aula 1: Introdução à Pesquisa Operacional",
     "description": "Aula introdutória sobre os conceitos básicos de Pesquisa Operacional e Programação Linear.",
     "topics": "Definição de PO, Fases de um estudo em PO e Introdução a Programação Linear.",
-    "slidesUrl": null,
-    "subVideos": null
-  },
-  {
-    "id": 2,
-    "youtubeId": null,
-    "title": "Aula 2: Teoria dos Grafos",
-    "description": "Introdução à Teoria dos Grafos, seus conceitos fundamentais e aplicações em Pesquisa Operacional.",
-    "topics": "Grafos, Vértices, Arestas, Grafos dirigidos e não dirigidos, Representações de grafos.",
-    "slidesUrl": [
-      {
-        "title": "Slides - Grafos: Introdução",
-        "url": "../assets/slides/po2/Grafos%20-%20Introdu%C3%A7%C3%A3o.pptx"
-      },
-      {
-        "title": "Slides - Grafos Parte 1",
-        "url": "../assets/slides/po2/Grafos_Parte1.pptx"
-      },
-      {
-        "title": "Slides - Grafos Parte 2",
-        "url": "../assets/slides/po2/Grafos_Parte2.pptx"
-      }
-    ],
-    "subVideos": [
-      {
-        "title": "Introdução a Teoria dos Grafos",
-        "youtubeId": "MCFquBRoo_Y"
-      },
-      {
-        "title": "Teoria dos Grafos - Parte 1",
-        "youtubeId": "ucx_eZKsoRQ"
-      },
-      {
-        "title": "Teoria dos Grafos - Parte 2",
-        "youtubeId": "brfBvQO5MII"
-      },
-      {
-        "title": "Gabarito Comentado",
-        "youtubeId": "_Ue2i2xdUVE"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "youtubeId": null,
-    "title": "Aula 3: Árvore Geradora",
-    "description": "Estudo das Árvores Geradoras Mínimas e dos principais algoritmos para sua obtenção.",
-    "topics": "Árvores Geradoras Mínimas, Algoritmo de Kruskal, Algoritmo de Prim.",
-    "slidesUrl": [
-      {
-        "title": "Slides - Árvores Geradoras Mínimas",
-        "url": "../assets/slides/po2/%C3%81rvores%20Geradoras%20M%C3%ADnimas.pptx"
-      }
-    ],
-    "subVideos": [
-      {
-        "title": "Árvore Geradora - Introdução",
-        "youtubeId": "WHxwUZNYqlE"
-      },
-      {
-        "title": "Algoritmo de Kruskal",
-        "youtubeId": "gQZ3hape028"
-      },
-      {
-        "title": "Algoritmo de Prim",
-        "youtubeId": "SoGAjtPReOc"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "youtubeId": null,
-    "title": "Aula 4: Problema do Menor Caminho",
-    "description": "Estudo do Problema do Menor Caminho e aplicação do Algoritmo de Dijkstra na teoria e na prática.",
-    "topics": "Problema do Menor Caminho, Algoritmo de Dijkstra, Aplicações em redes.",
-    "slidesUrl": [
-      {
-        "title": "Slides - Dijkstra: Teoria",
-        "url": "../assets/slides/po2/algoritmo_dijkstra_teoria.pptx"
-      },
-      {
-        "title": "Slides - Dijkstra: Prática",
-        "url": "../assets/slides/po2/algoritmo_dijkstra_pratica.pptx"
-      }
-    ],
-    "subVideos": [
-      {
-        "title": "Menor Caminho - Teoria",
-        "youtubeId": "Kr-32NTXZuM"
-      },
-      {
-        "title": "Menor Caminho - Algoritmo e Prática",
-        "youtubeId": "1i1I5FNpW64"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "youtubeId": null,
-    "title": "Aula 5: Problema do Fluxo Máximo",
-    "description": "Estudo do Problema do Fluxo Máximo em redes e sua resolução prática.",
-    "topics": "Fluxo Máximo, Redes de fluxo, Algoritmo Ford-Fulkerson.",
-    "slidesUrl": null,
-    "subVideos": [
-      {
-        "title": "Fluxo Máximo - Teoria",
-        "youtubeId": "UinUWIBy5pk"
-      },
-      {
-        "title": "Fluxo Máximo - Prática",
-        "youtubeId": "TP5sj-NIkqA"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "youtubeId": "pzZ29vszzpU",
-    "title": "Aula 6: Problema do Fluxo de Custo Mínimo",
-    "description": "Estudo do Problema do Fluxo de Custo Mínimo em redes de otimização.",
-    "topics": "Fluxo de Custo Mínimo, Otimização em Redes, Modelos de fluxo.",
-    "slidesUrl": [
-      {
-        "title": "Slides - Otimização em Redes",
-        "url": "../assets/slides/po2/Otimiza%C3%A7%C3%A3o%20em%20Redes2.pptx"
-      },
-      {
-        "title": "Slides - Otimização em Redes (Nova Versão)",
-        "url": "../assets/slides/po2/Otimiza%C3%A7%C3%A3o%20em%20Redes2%20(1).pptx"
-      }
-    ],
-    "subVideos": null
-  },
-  {
-    "id": 7,
-    "youtubeId": null,
-    "title": "Aula 7: PERT e CPM",
-    "description": "Técnicas de gerenciamento de projetos com foco em PERT e CPM para planejamento e controle de atividades.",
-    "topics": "PERT, CPM, Caminho Crítico, Gerenciamento de Projetos, Redes de atividades.",
-    "slidesUrl": [
-      {
-        "title": "Slides - PERT e CPM",
-        "url": "../assets/slides/po2/PERT_CPM.pptx"
-      }
-    ],
+    "slidesUrl": "https://link-para-os-slides/aula01.pdf",
     "subVideos": null
   },
   {
     "id": 8,
     "youtubeId": null,
-    "title": "Aula 8: Teoria dos Jogos",
-    "description": "Introdução à Teoria dos Jogos e seus modelos de tomada de decisão em situações de conflito.",
-    "topics": "Teoria dos Jogos, Jogos de soma zero, Estratégias puras e mistas, Equilíbrio de Nash.",
+    "title": "Aula 8: Programação Inteira",
+    "description": "Aula sobre os conceitos, modelagem e métodos de resolução de problemas de Programação Inteira.",
+    "topics": "Introdução à Programação Inteira, Modelos de Programação Inteira, Métodos de resolução.",
     "slidesUrl": [
       {
-        "title": "Slides - Teoria dos Jogos",
-        "url": "../assets/slides/po2/teoria%20dos%20jogos.pptx"
+        "title": "Slides - Programação Inteira",
+        "url": "../assets/slides/po2/Programa%C3%A7%C3%A3o%20Inteira.pptx"
       }
     ],
     "subVideos": [
       {
-        "title": "Teoria dos Jogos - Parte 1",
-        "youtubeId": "qaNQgtXEcuw"
+        "title": "Parte 1",
+        "youtubeId": "WZDdKfCHDzU"
       },
       {
-        "title": "Teoria dos Jogos - Parte 2",
-        "youtubeId": "Manxof9wOHE"
+        "title": "Parte 2",
+        "youtubeId": "omPq4A__ujI"
       },
       {
-        "title": "Teoria dos Jogos - Parte 3",
-        "youtubeId": "9eqoxsfNc-E"
+        "title": "Parte 3",
+        "youtubeId": "CqOF1SoOATQ"
       }
     ]
   },
   {
     "id": 9,
-    "youtubeId": null,
-    "title": "Aula 9: Programação Inteira",
-    "description": "Estudo dos modelos e métodos de resolução de problemas de Programação Inteira, incluindo o Algoritmo Branch and Bound.",
-    "topics": "Programação Inteira, Modelos de PI, Algoritmo Branch and Bound, Aplicações.",
-    "slidesUrl": [
-      {
-        "title": "Slides - Programação Inteira",
-        "url": "../assets/slides/po2/PI.pptx"
-      }
-    ],
-    "subVideos": [
-      {
-        "title": "Programação Inteira - Parte 1",
-        "youtubeId": "WZDdKfCHDzU"
-      },
-      {
-        "title": "Programação Inteira - Parte 2",
-        "youtubeId": "omPq4A__ujI"
-      },
-      {
-        "title": "Programação Inteira - Parte 3",
-        "youtubeId": "CqOF1SoOATQ"
-      },
-      {
-        "title": "Branch and Bound - Prática",
-        "youtubeId": "0ym2EcCLfWc"
-      }
-    ]
-  },
-  {
-    "id": 10,
     "youtubeId": "97jdCupjz-0",
-    "title": "Aula 10: Programação Não Linear",
-    "description": "Estudo dos conceitos e métodos de resolução de problemas de Programação Não Linear.",
-    "topics": "Programação Não Linear, Modelos de PNL, Condições de otimalidade, Métodos de resolução.",
+    "title": "Aula 9: Programação Não Linear",
+    "description": "Aula sobre os conceitos e métodos de resolução de problemas de Programação Não Linear.",
+    "topics": "Introdução à Programação Não Linear, Modelos de Programação Não Linear, Métodos de resolução.",
     "slidesUrl": [
       {
         "title": "Slides - Programação Não Linear",
