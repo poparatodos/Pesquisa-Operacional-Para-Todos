@@ -105,6 +105,8 @@ scripts e (depois) Docker.
 │   │       ├── theme.css            # variáveis UNIRIO + overrides de Bootstrap
 │   │       └── main.css             # imports globais
 │   ├── public/
+│   │   ├── .htaccess                # fallback SPA no Apache (produção UNIRIO)
+│   │   ├── 404.html                 # fallback SPA no GitHub Pages (gerado no build)
 │   │   └── materiais/
 │   │       ├── po1/                 # slides .pptx/.pdf com nomes limpos (sem %20)
 │   │       └── po2/
@@ -177,7 +179,10 @@ Vue Router em history mode:
 
 - `lessonId` = slug da aula, refletido na URL para links compartilháveis.
 - **SPA fallback:** GitHub Pages usa o truque de `404.html` (cópia do `index.html`);
-  produção (nginx) usa `try_files ... /index.html`.
+  produção roda em **Apache**, então usa um `.htaccess` com `mod_rewrite`
+  (`RewriteRule . index.html`) para servir o `index.html` em qualquer rota. O
+  `.htaccess` fica em `public/` para ser copiado no build. Atenção ao `RewriteBase`
+  e ao `base`/`<base href>` casarem com o caminho onde o site é servido.
 
 ## 7. Layout, identidade visual e mobile
 
@@ -229,19 +234,22 @@ Só uma aula é exibida por vez; a navegação é por seleção, não por empilh
   subpath do repositório no GitHub Pages. Controlado por variável de ambiente no build.
 - **GitHub Actions (validação):** em cada push/PR → instala, type-check, lint, build,
   (e2e opcional) e publica o `dist/` no **GitHub Pages**.
-- **Produção (UNIRIO):** `npm run build` gera `dist/` estático que é servido no servidor
-  da universidade. Como os vídeos ficam no YouTube, o servidor hospeda apenas o site
-  estático + a pasta `materiais/` (slides) — sem arquivos pesados.
-- **SPA fallback** configurado nos dois ambientes (`404.html` / `try_files`).
+- **Produção (UNIRIO):** `npm run build` gera `dist/` estático que é servido pelo
+  **Apache** da universidade. Como os vídeos ficam no YouTube, o servidor hospeda apenas
+  o site estático + a pasta `materiais/` (slides) — sem arquivos pesados.
+- **SPA fallback** configurado nos dois ambientes (`404.html` no Pages / `.htaccess`
+  com `mod_rewrite` no Apache).
 
 ## 11. Docker (fase posterior)
 
 Deixar o caminho pronto, ativar quando for containerizar o deploy na UNIRIO:
 
-- `Dockerfile` multi-stage: estágio Node builda o app → estágio nginx serve o `dist/`
-  estático.
-- `docker/nginx.conf` com fallback SPA (`try_files $uri $uri/ /index.html`), MIME e
-  cache de assets.
+- `Dockerfile` multi-stage: estágio Node builda o app → estágio servidor estático serve
+  o `dist/`. Como a produção da UNIRIO é Apache, usar a imagem **`httpd` (Apache)** no
+  container mantém a paridade com produção (mesmo comportamento de `.htaccess`); nginx é
+  alternativa possível.
+- Config do servidor com fallback SPA (Apache: `.htaccess`/`mod_rewrite`), MIME e cache
+  de assets.
 - Espelha a organização `docker/` do esf-rio.
 
 ## 12. Migração e consolidação de assets
@@ -283,10 +291,11 @@ Sequência sugerida (detalhada depois no plano de implementação):
 
 ## 15. Riscos e pontos de atenção
 
-- **Roteamento SPA no servidor UNIRIO:** precisa do fallback correto (nginx/Apache);
-  confirmar qual servidor web a universidade usa antes do deploy de produção.
+- **Roteamento SPA no servidor UNIRIO:** produção é **Apache** (confirmado) → fallback
+  via `.htaccess`/`mod_rewrite`; validar que `AllowOverride` está habilitado no diretório
+  do site (senão o `.htaccess` é ignorado) e que `base`/`RewriteBase` casam com o caminho.
 - **Capacidade/pptx grandes:** materiais continuam pequenos; sem risco de storage.
-- **Instagram (Elfsight):** script de terceiros pesado; avaliar manter o widget ou
-  trocar por um link/cartão estático para não penalizar o mobile.
+- **Instagram:** decidido trocar o widget Elfsight (pesado no mobile) por um **cartão/
+  link estático** para o perfil; feed ao vivo pode ser reavaliado depois.
 - **IDs de vídeo faltando:** há placeholders no JSON atual; o validador precisa acusá-los
   para não publicar aulas quebradas.
