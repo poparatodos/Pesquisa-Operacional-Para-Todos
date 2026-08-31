@@ -1,5 +1,9 @@
 <template>
-  <main class="container py-5">
-    <h1 class="text-center">Pesquisa Operacional Para Todos</h1>
-  </main>
+  <AppNavbar />
+  <RouterView />
+  <AppFooter />
 </template>
+<script setup lang="ts">
+import AppNavbar from '@/layout/AppNavbar.vue'
+import AppFooter from '@/layout/AppFooter.vue'
+</script>
