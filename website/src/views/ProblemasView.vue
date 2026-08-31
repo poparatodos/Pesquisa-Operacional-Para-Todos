@@ -1,6 +1,6 @@
 <template>
-  <HeroBanner title="Problemas Clássicos" />
+  <DisciplinaView slug="problemas" />
 </template>
 <script setup lang="ts">
-import HeroBanner from '@/layout/HeroBanner.vue'
+import DisciplinaView from './DisciplinaView.vue'
 </script>
