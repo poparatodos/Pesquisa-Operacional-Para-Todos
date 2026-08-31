@@ -4,7 +4,7 @@
     <p v-if="!materials.length" class="text-muted">Nenhum material disponível para esta aula.</p>
     <ul v-else class="list-unstyled">
       <li v-for="m in materials" :key="m.url" class="mb-2">
-        <a :href="m.url" target="_blank" rel="noopener" download><i class="bi bi-file-earmark-slides me-2"></i>{{ m.title }}</a>
+        <a :href="withBase(m.url)" target="_blank" rel="noopener" download><i class="bi bi-file-earmark-slides me-2"></i>{{ m.title }}</a>
       </li>
     </ul>
   </div>
@@ -12,4 +12,6 @@
 <script setup lang="ts">
 import type { Material } from '@/types/content'
 defineProps<{ materials: Material[] }>()
+
+const withBase = (url: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + url
 </script>

@@ -27,13 +27,6 @@
             >
           </li>
           <li class="d-flex align-items-start gap-3 mb-3">
-            <i class="bi bi-code-slash fs-4" style="color: var(--secondary-blue)"></i>
-            <span
-              ><strong>Algoritmos implementados em Python</strong>, prontos para download e
-              aplicação.</span
-            >
-          </li>
-          <li class="d-flex align-items-start gap-3 mb-3">
             <i class="bi bi-people fs-4" style="color: var(--secondary-blue)"></i>
             <span
               >Um <strong>espaço de integração</strong> com as redes sociais do projeto e com a

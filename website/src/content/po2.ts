@@ -58,7 +58,6 @@ export const po2: Discipline = {
       videos: [{ title: 'Aula completa', youtubeId: 'pzZ29vszzpU' }],
       materials: [
         { title: 'Slides - Otimização em Redes', url: '/materiais/po2/otimizacao-em-redes.pptx' },
-        { title: 'Slides - Otimização em Redes (Nova Versão)', url: '/materiais/po2/otimizacao-em-redes-nova-versao.pptx' },
       ] },
     { id: 'aula-7', number: 7, title: 'Aula 7: PERT e CPM',
       description: 'Técnicas de gerenciamento de projetos com foco em PERT e CPM para planejamento e controle de atividades.',
