@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --unirio-blue: #003366;
+  --secondary-blue: #005A9C;
+  --light-bg: #F8F9FA;
+  --dark-text: #343A40;
+  --highlight: #FFC107;
+
+  /* Mapear tokens do Bootstrap para a paleta UNIRIO */
+  --bs-primary: var(--unirio-blue);
+  --bs-primary-rgb: 0, 51, 102;
+  --bs-body-font-family: 'Poppins', system-ui, sans-serif;
+  --bs-body-color: var(--dark-text);
+  --bs-body-bg: var(--light-bg);
+}
