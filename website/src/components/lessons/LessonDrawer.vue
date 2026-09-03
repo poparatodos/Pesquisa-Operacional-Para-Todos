@@ -1,0 +1,50 @@
+<!-- Drawer (offcanvas) com a lista de aulas, pra saltar direto pra qualquer uma. -->
+<template>
+  <div id="lessonDrawer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="lessonDrawerLabel">
+    <div class="offcanvas-header">
+      <h2 id="lessonDrawerLabel" class="h6 mb-0">Aulas — {{ discipline.title }}</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="drawer__progress"><span :style="{ width: progress + '%' }" /></div>
+    <div class="offcanvas-body p-0">
+      <RouterLink
+        v-for="l in discipline.lessons"
+        :key="l.id"
+        :to="`/${discipline.slug}/${l.id}`"
+        data-bs-dismiss="offcanvas"
+        class="drawer__item"
+        :class="{ 'is-active': l.id === activeId }"
+      >
+        <span class="app-num" :class="{ 'app-num--active': l.id === activeId }">{{ l.number }}</span>
+        <span class="drawer__body">
+          <span class="drawer__title">{{ cleanTitle(l.title) }}</span>
+          <span class="drawer__meta">{{ mediaLabel(l) }}</span>
+        </span>
+      </RouterLink>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { Discipline } from '@/types/content'
+import { cleanTitle, mediaLabel } from '@/lib/lesson-format'
+
+const props = defineProps<{ discipline: Discipline; activeId: string }>()
+const progress = computed(() => {
+  const i = props.discipline.lessons.findIndex((l) => l.id === props.activeId)
+  const total = props.discipline.lessons.length || 1
+  return ((i + 1) / total) * 100
+})
+</script>
+
+<style scoped>
+.drawer__progress { height: 4px; background: var(--surface-2); }
+.drawer__progress span { display: block; height: 100%; background: var(--brand-bright); transition: width 0.2s; }
+.drawer__item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; text-decoration: none; color: inherit; border-bottom: 1px solid var(--border); }
+.drawer__item:hover { background: var(--surface-2); }
+.drawer__item.is-active { background: var(--brand-soft); }
+.drawer__body { display: flex; flex-direction: column; }
+.drawer__title { font-size: 0.9rem; font-weight: 600; line-height: 1.3; }
+.drawer__meta { font-size: 0.72rem; color: var(--muted); }
+</style>

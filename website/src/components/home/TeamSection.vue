@@ -1,6 +1,6 @@
 <template>
   <section class="container py-5">
-    <h2 class="text-center mb-4" style="color: var(--unirio-blue)">Nossa Equipe</h2>
+    <h2 class="section-title text-center mb-4">Nossa equipe</h2>
     <div class="row g-4 justify-content-center">
       <div v-for="m in team" :key="m.name" class="col-12 col-sm-6 col-lg-3">
         <TeamCard :member="m" />

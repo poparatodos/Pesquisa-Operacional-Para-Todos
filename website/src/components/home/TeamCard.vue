@@ -8,7 +8,7 @@
       height="120"
       style="object-fit: cover; width: 120px; height: 120px"
     />
-    <h3 class="h5 mb-1" style="color: var(--unirio-blue)">{{ member.name }}</h3>
+    <h3 class="h5 mb-1" style="color: var(--brand-strong)">{{ member.name }}</h3>
     <p class="text-muted small flex-grow-1">{{ member.role }}</p>
     <div class="d-flex justify-content-center gap-3 mt-2">
       <a
@@ -17,7 +17,7 @@
         target="_blank"
         rel="noopener"
         :aria-label="`LinkedIn de ${member.name}`"
-        style="color: var(--unirio-blue)"
+        style="color: var(--brand)"
       >
         <i class="bi bi-linkedin fs-5"></i>
       </a>
@@ -25,7 +25,7 @@
         v-if="member.email"
         :href="`mailto:${member.email}`"
         :aria-label="`Email de ${member.name}`"
-        style="color: var(--unirio-blue)"
+        style="color: var(--brand)"
       >
         <i class="bi bi-envelope fs-5"></i>
       </a>

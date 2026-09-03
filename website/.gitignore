@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Vite cache
+.vite
+
 # Cypress
 cypress/videos
 cypress/screenshots

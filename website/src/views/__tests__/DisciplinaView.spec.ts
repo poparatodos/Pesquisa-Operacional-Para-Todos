@@ -12,16 +12,17 @@ function mountAt(lessonId?: string) {
 }
 
 describe('DisciplinaView', () => {
-  it('lista todas as aulas na sidebar', async () => {
+  it('sem lessonId, mostra o catálogo com todas as aulas', async () => {
     const wrapper = await mountAt()
-    expect(wrapper.findAll('.lesson-nav-item')).toHaveLength(10)
+    expect(wrapper.findAll('.catalog__card')).toHaveLength(10)
   })
-  it('sem lessonId, mostra a primeira aula no painel', async () => {
-    const wrapper = await mountAt()
-    expect(wrapper.find('.lesson-panel').text()).toContain('Introdução à Pesquisa Operacional')
-  })
-  it('com lessonId, mostra a aula selecionada', async () => {
+  it('com lessonId, mostra a aula focada', async () => {
     const wrapper = await mountAt('aula-5')
-    expect(wrapper.find('.lesson-panel').text()).toContain('Algoritmo Simplex')
+    expect(wrapper.find('.focus__title').text()).toContain('Algoritmo Simplex')
+    expect(wrapper.find('.catalog__grid').exists()).toBe(false)
+  })
+  it('lista todas as aulas no drawer da aula focada', async () => {
+    const wrapper = await mountAt('aula-5')
+    expect(wrapper.findAll('.drawer__item')).toHaveLength(10)
   })
 })
