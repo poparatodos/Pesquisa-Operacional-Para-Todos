@@ -20,12 +20,6 @@ const routes: RouteRecordRaw[] = [
     name: 'problemas',
     component: () => import('@/views/ProblemasView.vue'),
   },
-  // PROTÓTIPO — descartável (design exploration do fluxo de aula). Remover ao consolidar.
-  {
-    path: '/prototipo/:slug?/:lessonId?',
-    name: 'prototipo',
-    component: () => import('@/prototype/PrototipoView.vue'),
-  },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') },
 ]
 

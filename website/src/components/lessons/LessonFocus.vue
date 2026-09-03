@@ -2,16 +2,16 @@
 <template>
   <main class="container focus">
     <div class="focus__topbar">
-      <RouterLink :to="`/${discipline.slug}`" class="focus__back"><i class="bi bi-grid"></i> Todas as aulas</RouterLink>
+      <nav class="focus__crumb" aria-label="Navegação estrutural">
+        <RouterLink :to="`/${discipline.slug}`" class="focus__crumb-link">{{ discipline.title }}</RouterLink>
+        <i class="bi bi-chevron-right focus__crumb-sep" aria-hidden="true"></i>
+        <span class="focus__crumb-current">Aula {{ position }} de {{ discipline.lessons.length }}</span>
+      </nav>
       <button class="app-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#lessonDrawer">
         <i class="bi bi-list-ul"></i> Aulas ({{ position }}/{{ discipline.lessons.length }})
       </button>
     </div>
 
-    <div class="focus__meta">
-      <span class="app-num">{{ lesson.number }}</span>
-      <span class="text-muted">Aula {{ position }} de {{ discipline.lessons.length }}</span>
-    </div>
     <h1 class="focus__title">{{ cleanTitle(lesson.title) }}</h1>
 
     <div class="focus__player">
@@ -64,8 +64,11 @@ const next = computed(() =>
 <style scoped>
 .focus { max-width: 880px; padding: 1.5rem 1rem 4rem; }
 .focus__topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
-.focus__back { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; font-weight: 600; }
-.focus__meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.focus__crumb { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; font-size: 0.9rem; min-width: 0; }
+.focus__crumb-link { text-decoration: none; font-weight: 600; color: var(--brand); }
+.focus__crumb-link:hover { text-decoration: underline; }
+.focus__crumb-sep { font-size: 0.7rem; color: var(--muted); }
+.focus__crumb-current { color: var(--muted); }
 .focus__title { font-size: var(--fs-h2); font-weight: 700; margin-bottom: 1rem; }
 .focus__player { margin-bottom: 1rem; }
 .focus__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }

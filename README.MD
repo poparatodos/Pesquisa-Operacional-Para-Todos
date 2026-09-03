@@ -41,7 +41,7 @@ src/
 ├── components/
 │   ├── GraphMark.vue        # assinatura visual (grafo) da marca
 │   ├── home/                # HomeHero, AboutSection, DisciplinesSection, SocialSection, TeamSection…
-│   ├── lessons/             # DisciplineHeader, LessonCatalog, LessonFocus, LessonDrawer
+│   ├── lessons/             # LessonCatalog, LessonFocus, LessonDrawer, MaterialList
 │   └── ui/                  # LiteYouTube (embed leve do YouTube)
 ├── content/                # DADOS tipados (fonte da verdade do conteúdo)
 │   ├── po1.ts, po2.ts, problemas.ts

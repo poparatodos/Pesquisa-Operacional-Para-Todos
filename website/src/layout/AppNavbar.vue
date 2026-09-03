@@ -8,8 +8,8 @@
           alt="UNIRIO — Universidade Federal do Estado do Rio de Janeiro"
           class="inst-strip__logo"
         />
-        <span class="inst-strip__sep" aria-hidden="true"></span>
-        <span class="inst-strip__text">Pró-Reitoria de Extensão e Cultura</span>
+        <!-- <span class="inst-strip__sep" aria-hidden="true"></span>
+        <span class="inst-strip__text">Pró-Reitoria de Extensão e Cultura</span> -->
       </div>
     </div>
 
@@ -49,15 +49,15 @@
 
 <script setup lang="ts">
 import GraphMark from '@/components/GraphMark.vue'
-import unirioLogo from '@/assets/logos/unirio-horizontal-negativo.png'
+import unirioLogo from '@/assets/logos/logo_header.png'
 </script>
 
 <style scoped>
 .inst-strip {
   background: var(--brand-strong);
-  height: 60px;            /* altura FIXA da faixa — não cresce com a logo */
+  height: 68px;            /* altura FIXA da faixa — não cresce com a logo */
   display: flex;
-  align-items: end;     /* centra o conteúdo (e o recorte da logo) na faixa */
+  align-items: center;     /* centra o conteúdo (e o recorte da logo) na faixa */
   overflow: hidden;        /* recorta o excedente/whitespace da logo maior */
 }
 .inst-strip__logo {

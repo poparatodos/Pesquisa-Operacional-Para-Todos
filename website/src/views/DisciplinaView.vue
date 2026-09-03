@@ -1,6 +1,5 @@
 <template>
   <template v-if="discipline">
-    <DisciplineHeader :discipline="discipline" />
     <LessonFocus v-if="activeLesson" :discipline="discipline" :lesson="activeLesson" />
     <LessonCatalog v-else :discipline="discipline" />
   </template>
@@ -11,7 +10,6 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDiscipline } from '@/content'
-import DisciplineHeader from '@/components/lessons/DisciplineHeader.vue'
 import LessonCatalog from '@/components/lessons/LessonCatalog.vue'
 import LessonFocus from '@/components/lessons/LessonFocus.vue'
 import NotFoundView from './NotFoundView.vue'
