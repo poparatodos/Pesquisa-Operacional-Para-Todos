@@ -1,0 +1,1 @@
+import{_ as e}from"./DisciplinaView.vue_vue_type_script_setup_true_lang-JTFLA2BQ.js";import{d as o,c as r,o as a}from"./index-DefL-ps3.js";import"./NotFoundView.vue_vue_type_script_setup_true_lang-6-NKk6H2.js";const p=o({__name:"ProblemasView",setup(s){return(t,m)=>(a(),r(e,{slug:"problemas"}))}});export{p as default};

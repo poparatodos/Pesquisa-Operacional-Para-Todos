@@ -1,0 +1,1 @@
+import{_ as o}from"./DisciplinaView.vue_vue_type_script_setup_true_lang-JTFLA2BQ.js";import"./index-DefL-ps3.js";import"./NotFoundView.vue_vue_type_script_setup_true_lang-6-NKk6H2.js";export{o as default};
