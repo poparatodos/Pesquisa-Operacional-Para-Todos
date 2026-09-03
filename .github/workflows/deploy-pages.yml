@@ -2,6 +2,9 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
+  # Homologação: permite disparar manualmente a partir de qualquer branch
+  # (ex.: vue-refactor) pela aba Actions do GitHub.
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
@@ -19,6 +22,8 @@ jobs:
       - run: npm ci
       - run: npm run test
       - run: npm run validate:content
+      # SPA fallback (deep links no Pages): o script postbuild do package.json
+      # já copia dist/index.html -> dist/404.html durante o build.
       - run: npm run build
         env:
           VITE_BASE: /Pesquisa-Operacional-Para-Todos/

@@ -21,6 +21,13 @@ describe('DisciplinaView', () => {
     expect(wrapper.find('.focus__title').text()).toContain('Algoritmo Simplex')
     expect(wrapper.find('.catalog__grid').exists()).toBe(false)
   })
+  it('na aula focada, o breadcrumb linka de volta para a disciplina', async () => {
+    const wrapper = await mountAt('aula-5')
+    const crumb = wrapper.find('.focus__crumb')
+    expect(crumb.exists()).toBe(true)
+    expect(crumb.text()).toContain('Pesquisa Operacional')
+    expect(crumb.text()).toMatch(/Aula \d+ de \d+/)
+  })
   it('lista todas as aulas no drawer da aula focada', async () => {
     const wrapper = await mountAt('aula-5')
     expect(wrapper.findAll('.drawer__item')).toHaveLength(10)
