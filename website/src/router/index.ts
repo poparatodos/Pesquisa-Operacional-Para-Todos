@@ -1,7 +1,11 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-const routes: RouteRecordRaw[] = [
+// Definição das rotas. A criação do Router (history/scroll) fica a cargo do
+// vite-ssg (ver src/main.ts): no build ele usa memory history para pré-render
+// e, no cliente, web history. Os testes montam seu próprio router a partir
+// desta lista.
+export const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: HomeView },
   {
     path: '/po1/:lessonId?',
@@ -22,9 +26,3 @@ const routes: RouteRecordRaw[] = [
   },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') },
 ]
-
-export const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-  scrollBehavior: () => ({ top: 0 }),
-})
