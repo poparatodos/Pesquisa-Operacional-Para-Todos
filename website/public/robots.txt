@@ -1,0 +1,8 @@
+# robots.txt de produção. Libera o rastreamento de todo o site (100%
+# pré-renderizado, sem áreas privadas) e aponta os buscadores para o sitemap.
+# Arquivo estático servido a partir de website/public/ → dist/robots.txt.
+# A linha Sitemap usa a origem canônica de PRODUÇÃO (ver src/seo → PROD_ORIGIN).
+User-agent: *
+Allow: /
+
+Sitemap: https://pesquisaoperacional.uniriotec.br/sitemap.xml
