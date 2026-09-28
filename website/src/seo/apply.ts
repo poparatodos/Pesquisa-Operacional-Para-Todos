@@ -49,9 +49,17 @@ export function toHeadInput(descriptor: HeadDescriptor): HeadInput {
   }
 
   const link = descriptor.canonical ? [{ rel: 'canonical', href: descriptor.canonical }] : []
-  const script = descriptor.jsonLd
-    ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(descriptor.jsonLd) }]
+  // `jsonLd` pode ser um objeto único OU uma lista: cada nó vira um <script>
+  // próprio, pois um <script application/ld+json> carrega um único objeto.
+  const jsonLdNodes = descriptor.jsonLd
+    ? Array.isArray(descriptor.jsonLd)
+      ? descriptor.jsonLd
+      : [descriptor.jsonLd]
     : []
+  const script = jsonLdNodes.map((node) => ({
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify(node),
+  }))
 
   return { title: descriptor.title, meta, link, script }
 }
