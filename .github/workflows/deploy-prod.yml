@@ -1,0 +1,83 @@
+# Deploy de PRODUÇÃO — servidor Apache da UNIRIO (https://pesquisaoperacional.uniriotec.br)
+#
+# Este workflow é INDEPENDENTE do deploy-pages.yml (que continua fazendo a
+# HOMOLOGAÇÃO no GitHub Pages com VITE_BASE=/Pesquisa-Operacional-Para-Todos/).
+# Aqui a base é '/' porque o site roda na raiz do domínio próprio.
+#
+# Sequência: só publica se testes + gate de SEO + build passarem.
+#   1. npm ci
+#   2. npm run test
+#   3. npm run build (VITE_BASE=/)  -> gera website/dist completo
+#      (24 páginas .html + sitemap.xml + robots.txt + 404.html + .htaccess
+#       + CNAME + og-image.png + materiais/)
+#   4. npm run seo:gate  +  npm run seo:lighthouse
+#   5. rsync -az --delete de website/dist/ para o DocumentRoot do Apache via SSH
+#
+# ── GitHub Secrets que o MANTENEDOR precisa cadastrar antes do 1º deploy ──
+#   (Settings > Secrets and variables > Actions)
+#   • SSH_HOST         host/IP do servidor Apache da UNIRIO
+#   • SSH_USER         usuário SSH com permissão de escrita no DocumentRoot
+#   • SSH_PRIVATE_KEY  chave PRIVADA SSH (conteúdo do arquivo, não o caminho);
+#                      a pública correspondente vai no ~/.ssh/authorized_keys do servidor
+#   • SSH_DEPLOY_PATH  caminho absoluto do DocumentRoot (ex.: /var/www/pesquisaoperacional)
+#
+# ── Dependências operacionais (fora do código) ──
+#   • DNS de pesquisaoperacional.uniriotec.br apontando para o servidor de produção
+#   • Certificado HTTPS válido para o domínio (TLS terminando no Apache)
+#   Sem DNS/HTTPS resolvidos o deploy sobe os arquivos mas o site não fica acessível.
+name: Deploy Prod
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: website/package-lock.json }
+      - run: npm ci
+      - run: npm run test
+      # Produção usa base '/' (domínio próprio na raiz), ao contrário da
+      # homologação no Pages que usa /Pesquisa-Operacional-Para-Todos/.
+      - run: npm run build
+        env:
+          VITE_BASE: /
+      # Gate de SEO (ticket 08): roda SOBRE o dist/ recém-gerado, ANTES de
+      # publicar. dist-scan (title/description/canonical por rota) + Lighthouse
+      # (categoria SEO); qualquer regressão falha o CI e bloqueia o deploy.
+      - run: npm run seo:gate
+      - run: npm run seo:lighthouse
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-prod
+          path: website/dist
+          retention-days: 1
+  deploy:
+    # Só roda após build (test + gate + build) passar.
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist-prod
+          path: dist
+      - name: Configura chave SSH (ssh-agent)
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Registra host conhecido
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+      # Publica o conteúdo de dist/ (barra final) no DocumentRoot.
+      # --delete remove no servidor o que não existe mais no build.
+      - name: Publica dist no Apache (rsync sobre SSH)
+        run: |
+          rsync -az --delete dist/ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_DEPLOY_PATH }}/"
