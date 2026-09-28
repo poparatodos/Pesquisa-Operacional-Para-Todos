@@ -1,210 +1,136 @@
-# 📘 Documentação do Projeto do Site - Pesquisa Operacional Para Todos
+# 📘 Pesquisa Operacional Para Todos
 
-Este documento descreve a estrutura, a lógica de programação e o funcionamento do site estático "Pesquisa Operacional Para Todos", um projeto de extensão da UNIRIO.
+Site do **projeto de extensão da UNIRIO** que disponibiliza videoaulas, materiais e
+problemas clássicos de **Pesquisa Operacional** de forma aberta e gratuita.
 
-# 📂 Estrutura de Diretórios
+Produção: <https://pesquisaoperacional.uniriotec.br/>
 
-A organização do projeto segue o padrão de sites estáticos, separando estrutura (HTML), estilo (CSS), comportamento (JS) e dados (JSON).
+> Este repositório passou por uma refatoração de **HTML/CSS/JS vanilla → Vue 3 + TypeScript + Vite**.
+> A aplicação vive em [`website/`](website/). O conteúdo antigo (site estático) foi substituído.
 
+---
+
+## 🛠️ Stack
+
+- **Vue 3** (`<script setup>`) + **TypeScript**
+- **Vite** (dev server e build)
+- **vue-router** (SPA com history mode)
+- **Bootstrap 5** + tema custom por CSS variables
+- **Vitest** + **@vue/test-utils** (testes unitários)
+- **Cypress** (testes e2e)
+
+---
+
+## 📂 Estrutura (`website/src/`)
 
 ```text
-/
-├── index.html                  # Página Inicial (Home)
-├── assets/
-│   ├── css/
-│   │   ├── style.css           # Estilos globais, layout, menu e carrossel
-│   │   └── pages.css           # Estilos específicos das páginas de aula (accordion, abas)
-│   ├── js/
-│   │   ├── main.js             # Lógica do Carrossel da Home
-│   │   ├── menu.js             # Lógica de abrir/fechar o menu lateral
-│   │   └── video-loader.js     # Carregamento dinâmico de aulas via JSON
-│   ├── data/
-│   │   ├── po1_videos.json     # Base de dados das aulas de PO1
-│   │   └── po2_videos.json     # Base de dados das aulas de PO2
-│   ├── images/                 # Imagens do site (logos, equipe, background)
-│   └── slides/                 # Arquivos de apoio (PPT, PDF)
-└── pages/
-    ├── po1.html                # Página da disciplina PO1
-    ├── po2.html                # Página da disciplina PO2
-    └── problemas.html          # Página de problemas clássicos
+src/
+├── main.ts                 # bootstrap do app; aplica o tema (data-theme) antes do mount
+├── App.vue                 # shell: AppNavbar + <RouterView> + AppFooter
+├── theme.ts                # flag de tema visual: 'blue' | 'green'
+├── router/index.ts         # rotas: /, /po1, /po2, /problemas, 404
+├── layout/
+│   ├── AppNavbar.vue        # faixa institucional (UNIRIO/PROEXC) + navbar + link do GitHub
+│   ├── AppFooter.vue        # rodapé com logo da PROEXC, redes e créditos
+│   └── HeroBanner.vue       # banner reutilizável (usado no 404)
+├── views/
+│   ├── HomeView.vue         # home: hero, sobre, disciplinas, redes, equipe
+│   ├── DisciplinaView.vue   # catálogo de aulas + aula em foco (PO1/PO2)
+│   ├── ProblemasView.vue    # problemas clássicos (reusa o padrão de disciplina)
+│   └── NotFoundView.vue
+├── components/
+│   ├── GraphMark.vue        # assinatura visual (grafo) da marca
+│   ├── home/                # HomeHero, AboutSection, DisciplinesSection, SocialSection, TeamSection…
+│   ├── lessons/             # LessonCatalog, LessonFocus, LessonDrawer, MaterialList
+│   └── ui/                  # LiteYouTube (embed leve do YouTube)
+├── content/                # DADOS tipados (fonte da verdade do conteúdo)
+│   ├── po1.ts, po2.ts, problemas.ts
+│   ├── team.ts
+│   └── index.ts            # getDiscipline(slug)
+├── types/content.ts        # tipos Discipline / Lesson / Video / Material
+├── lib/                    # helpers (ex.: formatação de aula)
+├── styles/
+│   ├── theme.css           # tokens de tema (base + [data-theme='blue'|'green'])
+│   ├── ui.css              # primitivos .app-* (botões, badges, cards)
+│   └── main.css            # imports do Bootstrap + tema
+└── assets/                 # logos e fotos da equipe
 ```
 
-# 🛠️ Tecnologias Utilizadas
+Glossário do domínio (Disciplina, Aula, Parte, Material, Problema Clássico): [`CONTEXT.md`](CONTEXT.md).
+Decisões de arquitetura: [`docs/adr/`](docs/adr/).
 
-* HTML5: 
-Estrutura semântica.
+---
 
-* CSS3: 
-Estilização com Flexbox, Grid Layout, Variáveis CSS e Animações.
+## 🚀 Rodando o projeto
 
-* JavaScript (Vanilla ES6+): 
-Manipulação do DOM, fetch API para dados e interatividade.
-
-* Lucide Icons: 
-Biblioteca de ícones leves (carregada via CDN).
-
-* JSON: 
-Formato para armazenamento dos dados das aulas.
-
-# 🎨 Estilização (CSS)
-
-## 1. Estilos Globais (style.css)
-Arquivo responsável pela identidade visual principal.
-
-Variáveis (:root): Define as cores principais (--unirio-blue, --secondary-blue) e dimensões do menu.
-
-Menu Lateral (.side-menu): Menu fixo à esquerda, oculto por padrão (transform: translateX(-100%)). É ativado via classe .side-menu--open.
-
-Hero Banner (.hero-banner): Possui um fundo com gradiente animado (@keyframes gradientShift) e uma sobreposição de imagem de grafo.
-
-Carrossel (.carousel): Container responsivo que altera a opacidade dos slides (.carousel-slide) para transição.
-
-## 2. Estilos das Páginas Internas (pages.css)
-Focado na exibição do conteúdo das aulas.
-
-Accordion (.accordion-item): Estiliza a lista de aulas. Usa max-height e transition para animar a abertura/fechamento dos detalhes.
-
-Abas de Vídeo (.video-tab-container): Estiliza a navegação entre múltiplos vídeos dentro de uma mesma aula (ex: Parte 1, Parte 2).
-
-Container de Vídeo (.video-container): Mantém a proporção 16:9 (padding-bottom: 56.25%) para os iframes do YouTube, garantindo responsividade.
-
-# ⚙️ Lógica JavaScript
-
-## 1. Menu Lateral (menu.js)
-Script simples que escuta o clique no botão .menu-toggle.
-
-Função: Alterna a classe side-menu--open no elemento .side-menu, fazendo o menu deslizar para dentro ou fora da tela.
-
-## 2. Carrossel da Home (main.js)
-Gerencia a rotação de slides na página inicial.
-
-Inicialização: Cria dinamicamente os "tracinhos" indicadores (.indicator) com base no número de slides.
-
-Autoplay: Muda o slide automaticamente a cada 20 segundos (autoplayDuration).
-
-Ajuste de Altura: A função adjustCarouselHeight() calcula a altura do maior slide e ajusta o container para evitar que o rodapé "pule" durante a troca de slides.
-
-Eventos: Pausa e reinicia o autoplay quando o usuário interage com as setas de navegação.
-
-## 3. Carregador de Aulas (video-loader.js)
-Este é o script mais complexo e importante para as páginas de conteúdo (po1.html, etc.).
-
-### Funcionamento:
-
-Detecção: Procura pelo elemento `<div id="accordion-wrapper">`.
-
-Fonte de Dados: Lê o atributo data-json-source deste elemento para saber qual arquivo JSON carregar (ex: po1_videos.json).
-
-Fetch API: Faz uma requisição assíncrona para buscar o JSON.
-
-Renderização: Itera sobre os objetos do JSON e constrói o HTML dinamicamente:
-
-Título e Descrição: Preenche os textos.
-
-Lógica de Vídeos:
-
-Se houver subVideos: Cria uma estrutura de Abas (Tabs) para navegar entre eles.
-
-Se houver apenas youtubeId: Cria um iframe único.
-
-Lógica de Materiais: Verifica se slidesUrl é uma string (link único) ou um array (múltiplos arquivos) e gera os links de download.
-
-Interatividade: Adiciona os eventos de clique ("click listeners") para abrir/fechar o accordion e trocar as abas dos vídeos.
-
-# 💾 Estrutura dos Dados (JSON)
-
-Os arquivos em assets/data/ alimentam as páginas de aula. O sistema suporta dois formatos principais de objeto de aula.
-
-Exemplo 1: Aula com Múltiplos Vídeos e Múltiplos Slides
-Utilizado quando uma aula é quebrada em partes.
-
-JSON
+```bash
+cd website
+npm install
+npm run dev        # servidor de desenvolvimento (Vite)
 ```
+
+Outros scripts (`package.json`):
+
+| Script | O que faz |
+|---|---|
+| `npm run build` | type-check (`vue-tsc`) + build de produção em `dist/` |
+| `npm run preview` | serve o build de `dist/` |
+| `npm run test` | testes unitários (Vitest) |
+| `npm run validate:content` | valida a integridade dos dados de conteúdo |
+| `npm run e2e` | testes end-to-end (Cypress) sobre o preview |
+
+---
+
+## ➕ Como adicionar conteúdo
+
+O conteúdo é **dado tipado**, não HTML. Para adicionar/editar aulas basta mexer nos
+arquivos de `src/content/` — o TypeScript garante o formato.
+
+### Adicionar uma aula a uma disciplina existente
+
+Abra `src/content/po1.ts` (ou `po2.ts`) e acrescente um item ao array `lessons`:
+
+```ts
 {
-  "id": 4,
-  "title": "Aula 04: Equivalência entre PPLs",
-  "description": "Descrição da aula...",
-  "topics": "Tópicos abordados...",
-  "slidesUrl": [
-    {
-      "title": "Slides - Equivalência",
-      "url": "../assets/slides/po1/equivalencia.pptx"
-    },
-    {
-      "title": "Slides - Modelagem",
-      "url": "../assets/slides/po1/modelagem.pptx"
-    }
+  id: 'aula-11', number: 11, title: 'Aula 11: ...',
+  description: '...',
+  topics: '...',
+  videos: [
+    { title: 'Parte 1', youtubeId: 'ID_DO_YOUTUBE' }, // só o ID, não a URL
   ],
-  "subVideos": [
-    {
-      "title": "Parte 1 - Teoria",
-      "youtubeId": "ID_DO_VIDEO_1"
-    },
-    {
-      "title": "Parte 2 - Exercício",
-      "youtubeId": "ID_DO_VIDEO_2"
-    }
-  ]
+  materials: [
+    { title: 'Slides - ...', url: '/materiais/po1/arquivo.pptx' },
+  ],
 }
 ```
 
-Exemplo 2: Aula Simples (1 Vídeo, 1 Arquivo)
-Utilizado para aulas diretas. youtubeId é usado diretamente se subVideos for nulo.
+- Uma aula pode ter **várias partes** (`videos: [...]`) ou nenhuma (estado "em breve").
+- Materiais de apoio vão em `website/public/materiais/…` e são referenciados por URL absoluta.
+- Rode `npm run validate:content` para conferir.
 
-JSON
-```
-{
-  "id": 1,
-  "youtubeId": "v5KRSzU2E4U",
-  "title": "Aula 1: Introdução",
-  "description": "Aula introdutória...",
-  "topics": "Definição de PO...",
-  "slidesUrl": "../assets/slides/po1/introducao.ppt",
-  "subVideos": null
-}
-```
-# 🚀 Como Adicionar Novo Conteúdo
-## 1. Adicionar uma Nova Aula
-Abra o arquivo JSON correspondente em assets/data/ (ex: po1_videos.json).
+### Criar uma nova disciplina
 
-Adicione um novo objeto ao array seguindo o modelo acima.
+1. Crie `src/content/po3.ts` exportando um `Discipline`.
+2. Registre-o em `src/content/index.ts`.
+3. Adicione a rota em `src/router/index.ts` e o link em `src/layout/AppNavbar.vue`.
 
-Se houver slides, faça o upload do arquivo para assets/slides/ e atualize o caminho no JSON.
+---
 
-Se for um vídeo do YouTube, pegue apenas o ID (a parte após v=), não a URL completa.
+## 🎨 Tema visual
 
-## 2. Criar uma Nova Página de Disciplina
-Duplique o arquivo pages/po1.html e renomeie (ex: pages/po3.html).
+A identidade é plugável via `src/theme.ts` (`export const THEME: Theme = 'blue'`).
+Os tokens de cada tema ficam em `src/styles/theme.css` (`[data-theme='blue']` / `[data-theme='green']`),
+aplicados no `<html>` por `main.ts`. Ver [`docs/adr/0002-tema-visual-plugavel-blue-green.md`](docs/adr/).
 
-Edite o título `<h1>` no HTML.
+---
 
-Crie um novo arquivo JSON em assets/data/ (ex: po3_videos.json).
+## 📝 Créditos
 
-No novo HTML, altere o atributo data-json-source para apontar para o novo JSON:
+Projeto de extensão **Pesquisa Operacional Para Todos** — UNIRIO / Pró-Reitoria de Extensão e Cultura (PROEXC).
 
-HTML
-```
-<div id="accordion-wrapper" data-json-source="po3_videos.json">
-```
-Adicione o link para a nova página no menu lateral em index.html e nas outras páginas.
+- **Coordenação:** Profa. Dra. Andréa Bonifácio
+- **Desenvolvimento do site:** Lucas Motta, Nathalia Ferreira
+- **Criação das videoaulas:** João Meirelles
 
-# 📦 Dependências Externas
-
-### Lucide Icons: 
-`<script src="https://unpkg.com/lucide@latest"></script>`
-
-Utilizado para renderizar ícones como setas, livros e logos de redes sociais.
-
-### Elfsight (Opcional): 
-
-Utilizado na Home para o feed do Instagram (script externo).
-
-# 📝 Autores e Créditos
-
-Desenvolvido pela equipe do projeto de extensão Pesquisa Operacional Para Todos - UNIRIO.
-
-Coordenação: Profª Dra. Andréa Bonifácio.
-
-Desenvolvimento: Lucas Motta, Nathalia Ferreira e Larissa Abreu.
-
-Criação de Conteúdo: João Meirelles, Davi Pereira e Renato Lemos.
+Redes: [YouTube](https://www.youtube.com/@PesquisaOperacionalparatodos) ·
+[Instagram](https://www.instagram.com/pesquisaoperacionalparatodos)

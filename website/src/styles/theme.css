@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* ============================================================
+   Tokens de tema. Base neutra light comum; a marca troca via
+   data-theme (setado em main.ts a partir de src/theme.ts).
+   ============================================================ */
+
+:root {
+  /* base neutra (light) */
+  --bg: #f5f7f9;
+  --surface: #ffffff;
+  --surface-2: #eef1f4;
+  --text: #1b2430;
+  --muted: #5b6672;
+  --border: #e2e6eb;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.06);
+  --radius: 14px;
+
+  /* escala tipográfica Major Third (1.25) a partir de 16px */
+  --fs-h4: 1.25rem;
+  --fs-h3: 1.5625rem;
+  --fs-h2: 1.953rem;
+  --fs-h1: 2.441rem;
+
+  /* Bootstrap → base */
+  --bs-body-font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+  --bs-border-color: var(--border);
+}
+
+/* ---- TEMA VERDE (marca do canal) — padrão ---- */
+html[data-theme='green'] {
+  --brand: #3e7d22;
+  --brand-strong: #2f5f19;
+  --brand-bright: #8bc34a;
+  --brand-soft: #eaf4dd;
+  --brand-graph: #8bc34a;
+  --accent: #e0761e;
+  --accent-soft: #fbe9d6;
+
+  --bs-primary: #3e7d22;
+  --bs-primary-rgb: 62, 125, 34;
+  --bs-link-color: #3e7d22;
+  --bs-link-color-rgb: 62, 125, 34;
+  --bs-link-hover-color: #2f5f19;
+}
+
+/* ---- TEMA AZUL (UNIRIO institucional) ---- */
+html[data-theme='blue'] {
+  --brand: #013a73;
+  --brand-strong: #002b57;
+  --brand-bright: #2f80c8;
+  --brand-soft: #e8f0f8;
+  --brand-graph: #2f80c8;
+  --accent: #e08a1e;
+  --accent-soft: #fbeeda;
+
+  --bs-primary: #013a73;
+  --bs-primary-rgb: 1, 58, 115;
+  --bs-link-color: #013a73;
+  --bs-link-color-rgb: 1, 58, 115;
+  --bs-link-hover-color: #002b57;
+}
+
+/* fallback: sem data-theme, usa verde */
+:root:not([data-theme]) {
+  --brand: #3e7d22;
+  --brand-strong: #2f5f19;
+  --brand-bright: #8bc34a;
+  --brand-soft: #eaf4dd;
+  --brand-graph: #8bc34a;
+  --accent: #e0761e;
+  --accent-soft: #fbe9d6;
+}
+
+body { background: var(--bg); color: var(--text); }
+
+/* ---- overrides de componentes Bootstrap p/ seguir o tema ---- */
+.nav-pills .nav-link { color: var(--brand); }
+.nav-pills .nav-link.active { background-color: var(--brand); color: #fff; }
