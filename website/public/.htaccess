@@ -1,8 +1,42 @@
+# .htaccess de produção (Apache).
+#
+# Contexto: o site é 100% pré-renderizado (vite-ssg). A home, cada catálogo de
+# Disciplina e CADA Aula existem como arquivos .html próprios em disco
+# (ex.: /po1.html, /po1/aula-5.html). Não há mais SPA fallback: rotas legítimas
+# são arquivos reais, então uma URL inexistente PODE (e deve) devolver 404.
+#
+# Convenção de URL (combinada com o ticket 04): as URLs limpas são SEM extensão
+# (ex.: /po1/aula-5) e servem o .html pré-renderizado correspondente
+# (po1/aula-5.html) — feito abaixo pela regra de clean-URL.
+
+# 404 real: qualquer request que não resolva para um arquivo existente devolve
+# HTTP 404 servindo a página própria de "não encontrada" (dist/404.html, gerada
+# pela pré-renderização da NotFoundView — ver vite.config.ts). Substitui o antigo
+# catch-all que reescrevia TUDO para /index.html (soft-404 mascarado de 200).
+ErrorDocument 404 /404.html
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+
+  # Arquivos e diretórios existentes passam direto (inclui os .html, assets, etc.).
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Clean-URL: /po1/aula-5 -> po1/aula-5.html quando o .html existe. Só reescreve
+  # se a versão com extensão for um arquivo real; caso contrário cai no
+  # ErrorDocument 404 acima. NÃO existe mais catch-all para /index.html.
+  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
 </IfModule>
+
+# Ambiente duplo (raciocínio):
+#  - Produção (Apache, este arquivo): serve a 404.html real para URLs inexistentes
+#    e resolve as clean-URLs anexando .html quando o arquivo pré-renderizado existe.
+#  - Homologação (GitHub Pages): o Pages já faz pretty-URL nativamente, então um
+#    deep link legítimo como /po1/aula-5 resolve para o po1/aula-5.html
+#    pré-renderizado sem depender deste .htaccess (o Pages ignora .htaccess). Como
+#    todas as rotas legítimas existem como HTML, servir uma 404.html REAL (em vez
+#    de copiar a index) NÃO quebra deep links legítimos em nenhum dos dois
+#    ambientes — só as URLs realmente inexistentes é que passam a receber 404.

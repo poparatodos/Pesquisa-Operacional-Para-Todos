@@ -15,7 +15,12 @@ const ssgOptions: ViteSSGOptions = {
   // próprio (cada Aula é uma landing page por palavra-chave). As views de
   // Disciplina/Aula já são SSR-safe (bootstrap é importado sob demanda só no
   // cliente — ver LessonDrawer.vue e main.ts).
-  includedRoutes: () => ssgRoutes(),
+  //
+  // Acrescenta '/404' (fora de src/seo, que é a enumeração de rotas de SEO) para
+  // gerar uma dist/404.html REAL a partir da NotFoundView — usada pelo
+  // `ErrorDocument 404 /404.html` do public/.htaccess. Substitui o antigo
+  // postbuild que copiava a index.html (soft-404).
+  includedRoutes: () => [...ssgRoutes(), '/404'],
 }
 
 export default defineConfig({
