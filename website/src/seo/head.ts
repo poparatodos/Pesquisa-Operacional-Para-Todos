@@ -4,6 +4,9 @@
 // dentro dos componentes); a aplicação no documento/SSR fica em `./apply.ts`.
 //
 // Glossário (ver CONTEXT.md): Disciplina, Aula, Parte, Material.
+import type { Discipline, Lesson } from '@/types/content'
+import { getDiscipline } from '@/content'
+import { cleanTitle } from '@/lib/lesson-format'
 
 /** Metadados Open Graph de uma página. */
 export interface OpenGraph {
@@ -63,20 +66,88 @@ function fallbackHead(): HeadDescriptor {
   return { title: SITE_NAME, description: HOME_DESCRIPTION }
 }
 
+/** Primeira string não vazia (após trim) de uma lista, ou `undefined`. */
+function firstNonEmpty(...values: (string | undefined)[]): string | undefined {
+  for (const v of values) {
+    if (v && v.trim().length > 0) return v
+  }
+  return undefined
+}
+
+/**
+ * Descritor de <head> do catálogo de uma Disciplina.
+ * `title`: `"{Disciplina} | Pesquisa Operacional Para Todos"`.
+ * `description`: `seoDescription` (se houver) senão o `subtitle`, com fallback.
+ */
+export function disciplineHead(discipline: Discipline): HeadDescriptor {
+  const title = `${discipline.title} | ${SITE_NAME}`
+  const description = firstNonEmpty(discipline.seoDescription, discipline.subtitle) ?? HOME_DESCRIPTION
+  return {
+    title,
+    description,
+    og: { title: discipline.title, description, type: 'website', siteName: SITE_NAME },
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: discipline.title,
+      description,
+      inLanguage: 'pt-BR',
+      provider: { '@type': 'Organization', name: SITE_NAME },
+    },
+  }
+}
+
+/**
+ * Descritor de <head> de uma Aula — uma landing page por palavra-chave.
+ * `title`: `"{Aula} — {Disciplina} | Pesquisa Operacional Para Todos"` (a
+ * Aula sem o prefixo "Aula N:", que já vem no título de conteúdo).
+ * `description`: `seoDescription` sobrescreve a `description` de conteúdo quando
+ * presente; na ausência de ambas, cai num fallback derivado da Disciplina.
+ */
+export function lessonHead(discipline: Discipline, lesson: Lesson): HeadDescriptor {
+  const title = `${cleanTitle(lesson.title)} — ${discipline.title} | ${SITE_NAME}`
+  const description =
+    firstNonEmpty(lesson.seoDescription, lesson.description) ??
+    firstNonEmpty(discipline.seoDescription, discipline.subtitle) ??
+    HOME_DESCRIPTION
+  return {
+    title,
+    description,
+    og: { title: `${cleanTitle(lesson.title)} — ${discipline.title}`, description, type: 'article', siteName: SITE_NAME },
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'LearningResource',
+      name: cleanTitle(lesson.title),
+      description,
+      inLanguage: 'pt-BR',
+      isPartOf: { '@type': 'Course', name: discipline.title },
+    },
+  }
+}
+
 /**
  * Descritor de <head> para uma rota nomeada. Função pura e determinística:
  * a mesma entrada produz sempre a mesma saída, sem efeitos colaterais.
  *
- * Nesta fatia (tracer) apenas a `home` tem SEO próprio; as demais rotas caem no
- * fallback. As próximas fatias acrescentam Disciplina/Aula/Parte a partir de
- * `params` (ex.: `slug`, `lessonId`).
+ * `home` tem SEO próprio; as rotas de Disciplina (`po1`/`po2`/`problemas`, cujo
+ * nome coincide com o `slug`) derivam o <head> do conteúdo tipado: com
+ * `lessonId` presente e válido, o head da Aula; senão o do catálogo. Rotas
+ * desconhecidas caem no fallback.
  */
 export function headForRoute(routeName: RouteName, params: RouteParams = {}): HeadDescriptor {
-  void params // reservado para Disciplina/Aula/Parte nas próximas fatias
-  switch (routeName) {
-    case 'home':
-      return home
-    default:
-      return fallbackHead()
+  if (routeName === 'home') return home
+
+  if (typeof routeName === 'string') {
+    const discipline = getDiscipline(routeName)
+    if (discipline) {
+      const lessonId = params.lessonId
+      if (typeof lessonId === 'string' && lessonId.length > 0) {
+        const lesson = discipline.lessons.find((l) => l.id === lessonId)
+        return lesson ? lessonHead(discipline, lesson) : disciplineHead(discipline)
+      }
+      return disciplineHead(discipline)
+    }
   }
+
+  return fallbackHead()
 }

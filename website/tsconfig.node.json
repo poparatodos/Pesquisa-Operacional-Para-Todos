@@ -6,12 +6,18 @@
     "types": ["node"],
     "skipLibCheck": true,
 
-    /* Bundler mode */
-    "module": "nodenext",
+    /* Bundler mode — o vite.config é carregado pelo bundler do Vite (esbuild),
+       não pelo Node puro; a resolução `bundler` reflete isso e deixa o config
+       importar o código-fonte da app (ex.: a enumeração de rotas de pré-render)
+       do mesmo jeito que a app o resolve (extensionless, ciente do alias `@/`). */
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] },
 
     /* Linting */
     "noUnusedLocals": true,
