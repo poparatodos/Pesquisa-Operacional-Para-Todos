@@ -10,11 +10,12 @@
         />
         <!-- <span class="inst-strip__sep" aria-hidden="true"></span>
         <span class="inst-strip__text">Pró-Reitoria de Extensão e Cultura</span> -->
+        <ThemeToggle class="ms-auto" />
       </div>
     </div>
 
     <!-- Navbar principal -->
-    <nav class="navbar navbar-expand-lg navbar-dark" :style="{ backgroundColor: 'var(--brand)' }">
+    <nav class="navbar navbar-expand-lg navbar-dark" :style="{ backgroundColor: 'var(--brand-strong)' }">
       <div class="container">
         <RouterLink class="navbar-brand d-flex align-items-center gap-2" to="/">
           <GraphMark :size="28" light />
@@ -40,6 +41,10 @@
                 <i class="bi bi-github"></i>
               </a>
             </li>
+            <!-- Troca de tema no menu mobile (a faixa institucional some no mobile) -->
+            <li class="nav-item mt-2 mt-lg-0 d-lg-none">
+              <ThemeToggle />
+            </li>
           </ul>
         </div>
       </div>
@@ -49,19 +54,21 @@
 
 <script setup lang="ts">
 import GraphMark from '@/components/GraphMark.vue'
+import ThemeToggle from '@/components/ui/ThemeToggle.vue'
 import unirioLogo from '@/assets/logos/logo_header.png'
 </script>
 
 <style scoped>
 .inst-strip {
-  background: var(--brand-strong);
-  height: 68px;            /* altura FIXA da faixa — não cresce com a logo */
+  background: var(--brand);  /* mesma cor da navbar de baixo */
+  height: 55px;            /* altura FIXA da faixa — não cresce com a logo */
   display: flex;
   align-items: center;     /* centra o conteúdo (e o recorte da logo) na faixa */
   overflow: hidden;        /* recorta o excedente/whitespace da logo maior */
 }
 .inst-strip__logo {
-  height: 55px;           /* > altura da faixa: a marca aparece bem maior */
+  height: 48px;           /* > altura da faixa (55px): o overflow recorta o
+                             espaço em branco do PNG e a marca aparece maior */
   width: auto;
   flex: 0 0 auto;
 }

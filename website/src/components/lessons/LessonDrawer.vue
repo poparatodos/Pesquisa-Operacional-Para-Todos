@@ -1,6 +1,6 @@
 <!-- Drawer (offcanvas) com a lista de aulas, pra saltar direto pra qualquer uma. -->
 <template>
-  <div id="lessonDrawer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="lessonDrawerLabel">
+  <div id="lessonDrawer" ref="root" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="lessonDrawerLabel">
     <div class="offcanvas-header">
       <h2 id="lessonDrawerLabel" class="h6 mb-0">Aulas — {{ discipline.title }}</h2>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
@@ -11,8 +11,8 @@
         v-for="l in discipline.lessons"
         :key="l.id"
         :to="`/${discipline.slug}/${l.id}`"
-        data-bs-dismiss="offcanvas"
         class="drawer__item"
+        @click="close"
         :class="{ 'is-active': l.id === activeId }"
       >
         <span class="app-num" :class="{ 'app-num--active': l.id === activeId }">{{ l.number }}</span>
@@ -26,11 +26,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { Offcanvas } from 'bootstrap'
 import type { Discipline } from '@/types/content'
 import { cleanTitle, mediaLabel } from '@/lib/lesson-format'
 
 const props = defineProps<{ discipline: Discipline; activeId: string }>()
+
+// Fechamos o offcanvas via API em vez de `data-bs-dismiss`: o handler de dismiss
+// do Bootstrap roda na fase de captura e dá preventDefault em <a>, o que barra a
+// navegação do RouterLink. Sem o atributo, o link navega; aqui só fechamos o drawer.
+const root = ref<HTMLElement | null>(null)
+function close() {
+  if (root.value) Offcanvas.getInstance(root.value)?.hide()
+}
 const progress = computed(() => {
   const i = props.discipline.lessons.findIndex((l) => l.id === props.activeId)
   const total = props.discipline.lessons.length || 1

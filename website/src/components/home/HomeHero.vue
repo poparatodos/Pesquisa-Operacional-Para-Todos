@@ -5,7 +5,6 @@
     </div>
     <div class="container">
       <div class="hero__inner">
-        <span class="app-badge mb-3">Projeto de Extensão · UNIRIO</span>
         <h1 class="hero__title">Pesquisa Operacional <span>para Todos</span></h1>
         <p class="hero__subtitle">
           Videoaulas, materiais e problemas clássicos de Pesquisa Operacional —
