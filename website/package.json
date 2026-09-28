@@ -10,6 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:content": "vite-node scripts/validate-content.ts",
+    "seo:gate": "vite-node scripts/seo-gate.ts",
+    "seo:lighthouse": "lhci autorun",
     "e2e": "start-server-and-test preview http://localhost:4173 \"cypress run\""
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@types/node": "^24.13.3",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.5.0",

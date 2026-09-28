@@ -27,6 +27,14 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /Pesquisa-Operacional-Para-Todos/
+      # Gate de SEO (ticket 08): roda SOBRE o dist/ recém-gerado, ANTES de
+      # publicar. (1) dist-scan: title único/description/canonical por rota;
+      # falha o CI com código ≠ 0 se qualquer rota regredir.
+      - run: npm run seo:gate
+      # (2) Lighthouse CI: audita o dist/ (staticDistDir) e falha se a categoria
+      # SEO < 100. O runner ubuntu-latest já traz Chrome; chromeFlags em
+      # lighthouserc.json usam --no-sandbox --headless=new para o ambiente de CI.
+      - run: npm run seo:lighthouse
       - uses: actions/upload-pages-artifact@v3
         with: { path: website/dist }
   deploy:

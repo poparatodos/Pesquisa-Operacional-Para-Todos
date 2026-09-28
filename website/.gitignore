@@ -19,6 +19,9 @@ dist-ssr
 cypress/videos
 cypress/screenshots
 
+# Lighthouse CI (relatórios/artefatos locais do `npm run seo:lighthouse`)
+.lighthouseci
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
