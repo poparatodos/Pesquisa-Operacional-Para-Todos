@@ -37,6 +37,15 @@ export function toHeadInput(descriptor: HeadDescriptor): HeadInput {
       { property: 'og:site_name', content: og.siteName },
     )
     if (og.url) meta.push({ property: 'og:url', content: og.url })
+    if (og.image) {
+      // Card social grande com a imagem de marca. `twitter:card` só faz sentido
+      // com uma imagem; emitimos os dois juntos.
+      meta.push(
+        { property: 'og:image', content: og.image },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: og.image },
+      )
+    }
   }
 
   const link = descriptor.canonical ? [{ rel: 'canonical', href: descriptor.canonical }] : []
@@ -59,7 +68,8 @@ export function installRouteHead(router: Router, head: VueHeadClient): void {
   let entry: ReturnType<VueHeadClient['push']> | null = null
 
   router.afterEach((to) => {
-    const input = toHeadInput(headForRoute(to.name, to.params as RouteParams))
+    // `to.path` alimenta a canonical/og:url absolutas (sempre de produção).
+    const input = toHeadInput(headForRoute(to.name, to.params as RouteParams, to.path))
     if (entry) entry.patch(input as UseHeadInput)
     else entry = head.push(input as UseHeadInput)
   })

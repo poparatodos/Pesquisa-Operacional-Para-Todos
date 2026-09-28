@@ -15,7 +15,10 @@ export interface OpenGraph {
   /** Tipo OG (ex.: `website`, `article`). */
   type: string
   siteName: string
+  /** URL canônica ABSOLUTA da página (`og:url`); igual à `canonical`. */
   url?: string
+  /** URL ABSOLUTA da imagem de card social (`og:image`). */
+  image?: string
 }
 
 /** Descritor de <head> de uma página — a saída canônica deste módulo. */
@@ -35,6 +38,54 @@ export type RouteName = string | symbol | null | undefined
 export type RouteParams = Record<string, string | string[]>
 
 const SITE_NAME = 'Pesquisa Operacional Para Todos'
+
+/**
+ * Origem canônica de PRODUÇÃO. A `canonical` (e a `og:url`) de TODAS as rotas
+ * aponta sempre para este domínio, mesmo quando o site é servido em homologação
+ * (GitHub Pages, sob outro base). Convenção combinada com o ticket 06 — NÃO
+ * divergir: URL SEM extensão `.html` e SEM barra final (a home é a própria
+ * origem).
+ */
+export const PROD_ORIGIN = 'https://pesquisaoperacional.uniriotec.br'
+
+/**
+ * Caminho (relativo à origem de produção) do asset de OG image de marca
+ * (1200×630) servido em `website/public/og-image.png`. É um card de marca
+ * gerado (gradiente verde institucional + logo UNIRIO + título) — pode ser
+ * trocado por uma arte final sem alterar este módulo. Ver `og:image` absoluto
+ * abaixo.
+ */
+export const OG_IMAGE_PATH = '/og-image.png'
+
+/** URL ABSOLUTA da OG image de marca em produção (`og:image` de todas as rotas). */
+export const OG_IMAGE_URL = `${PROD_ORIGIN}${OG_IMAGE_PATH}`
+
+/**
+ * URL canônica ABSOLUTA de uma rota: `PROD_ORIGIN` + o path da rota, SEM a
+ * extensão `.html` e SEM barra final (a home vira a própria origem). Função
+ * pura e determinística; o path vem do router (`to.path`).
+ */
+export function canonicalUrl(path: string): string {
+  let p = path.split(/[?#]/)[0] // descarta query/hash defensivamente
+  p = p.replace(/\.html$/i, '') // sem extensão
+  p = p.replace(/\/+$/, '') // sem barra final → a home ('/') vira ''
+  if (p.length > 0 && !p.startsWith('/')) p = `/${p}`
+  return `${PROD_ORIGIN}${p}`
+}
+
+/**
+ * Carimba no descritor a `canonical` absoluta da rota e, quando há Open Graph,
+ * a `og:url` (= canonical) e a `og:image` de marca. Mantém a lógica de URL num
+ * só lugar (módulo puro), fora dos componentes.
+ */
+function withUrls(descriptor: HeadDescriptor, path: string): HeadDescriptor {
+  const canonical = canonicalUrl(path)
+  return {
+    ...descriptor,
+    canonical,
+    og: descriptor.og ? { ...descriptor.og, url: canonical, image: OG_IMAGE_URL } : descriptor.og,
+  }
+}
 
 const HOME_DESCRIPTION =
   'Videoaulas, materiais e problemas clássicos de Pesquisa Operacional — abertos, ' +
@@ -133,8 +184,22 @@ export function lessonHead(discipline: Discipline, lesson: Lesson): HeadDescript
  * nome coincide com o `slug`) derivam o <head> do conteúdo tipado: com
  * `lessonId` presente e válido, o head da Aula; senão o do catálogo. Rotas
  * desconhecidas caem no fallback.
+ *
+ * Quando `path` é informado (o `to.path` do router), carimba a `canonical`
+ * absoluta de produção, a `og:url` e a `og:image` de marca. Sem `path`, devolve
+ * apenas os metadados de conteúdo (usado nos testes puros de conteúdo).
  */
-export function headForRoute(routeName: RouteName, params: RouteParams = {}): HeadDescriptor {
+export function headForRoute(
+  routeName: RouteName,
+  params: RouteParams = {},
+  path?: string,
+): HeadDescriptor {
+  const descriptor = headContent(routeName, params)
+  return path === undefined ? descriptor : withUrls(descriptor, path)
+}
+
+/** Descritor de conteúdo (title/description/og/jsonLd), sem URLs de rota. */
+function headContent(routeName: RouteName, params: RouteParams): HeadDescriptor {
   if (routeName === 'home') return home
 
   if (typeof routeName === 'string') {
