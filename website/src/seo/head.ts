@@ -27,8 +27,13 @@ export interface HeadDescriptor {
   description: string
   canonical?: string
   og?: OpenGraph
-  /** Bloco JSON-LD (schema.org) a ser serializado em <script type="application/ld+json">. */
-  jsonLd?: Record<string, unknown>
+  /**
+   * Dados estruturados schema.org. Um objeto único OU uma lista de objetos —
+   * cada um vira um `<script type="application/ld+json">` próprio (ver
+   * `./apply.ts`). A lista é usada quando a página emite mais de um tipo (ex.:
+   * `Course` + `BreadcrumbList`), mantendo cada script com um único objeto.
+   */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
 }
 
 /** Nome de rota do vue-router (string, símbolo, `null` ou `undefined`). */
@@ -59,6 +64,47 @@ export const OG_IMAGE_PATH = '/og-image.png'
 
 /** URL ABSOLUTA da OG image de marca em produção (`og:image` de todas as rotas). */
 export const OG_IMAGE_URL = `${PROD_ORIGIN}${OG_IMAGE_PATH}`
+
+/**
+ * Caminho (relativo à origem de produção) do logo institucional usado no
+ * `logo` da `EducationalOrganization` (dados estruturados). Servido em
+ * `website/public/unirio-icone.png`.
+ */
+export const LOGO_PATH = '/unirio-icone.png'
+
+/** URL ABSOLUTA do logo institucional em produção (`EducationalOrganization.logo`). */
+export const LOGO_URL = `${PROD_ORIGIN}${LOGO_PATH}`
+
+/**
+ * Nó JSON-LD da organização educacional do site (schema.org
+ * `EducationalOrganization`). Sem `@context` — próprio para ser aninhado como
+ * `provider` de um `Course`. Para emitir standalone, envelope com `@context`.
+ */
+function organizationNode(): Record<string, unknown> {
+  return {
+    '@type': 'EducationalOrganization',
+    name: SITE_NAME,
+    url: PROD_ORIGIN,
+    logo: LOGO_URL,
+  }
+}
+
+/** Um degrau da trilha de navegação (schema.org `ListItem`). */
+function breadcrumbItem(position: number, name: string, item: string): Record<string, unknown> {
+  return { '@type': 'ListItem', position, name, item }
+}
+
+/**
+ * Nó JSON-LD `BreadcrumbList` a partir de degraus já ordenados (Site › …).
+ * URLs absolutas de produção via `canonicalUrl`.
+ */
+function breadcrumbList(items: Record<string, unknown>[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items,
+  }
+}
 
 /**
  * URL canônica ABSOLUTA de uma rota: `PROD_ORIGIN` + o path da rota, SEM a
@@ -100,13 +146,20 @@ const home: HeadDescriptor = {
     type: 'website',
     siteName: SITE_NAME,
   },
-  jsonLd: {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE_NAME,
-    description: HOME_DESCRIPTION,
-    inLanguage: 'pt-BR',
-  },
+  jsonLd: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: PROD_ORIGIN,
+      description: HOME_DESCRIPTION,
+      inLanguage: 'pt-BR',
+    },
+    {
+      '@context': 'https://schema.org',
+      ...organizationNode(),
+    },
+  ],
 }
 
 /**
@@ -137,14 +190,20 @@ export function disciplineHead(discipline: Discipline): HeadDescriptor {
     title,
     description,
     og: { title: discipline.title, description, type: 'website', siteName: SITE_NAME },
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'Course',
-      name: discipline.title,
-      description,
-      inLanguage: 'pt-BR',
-      provider: { '@type': 'Organization', name: SITE_NAME },
-    },
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: discipline.title,
+        description,
+        inLanguage: 'pt-BR',
+        provider: organizationNode(),
+      },
+      breadcrumbList([
+        breadcrumbItem(1, SITE_NAME, PROD_ORIGIN),
+        breadcrumbItem(2, discipline.title, canonicalUrl(`/${discipline.slug}`)),
+      ]),
+    ],
   }
 }
 
@@ -165,14 +224,21 @@ export function lessonHead(discipline: Discipline, lesson: Lesson): HeadDescript
     title,
     description,
     og: { title: `${cleanTitle(lesson.title)} — ${discipline.title}`, description, type: 'article', siteName: SITE_NAME },
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'LearningResource',
-      name: cleanTitle(lesson.title),
-      description,
-      inLanguage: 'pt-BR',
-      isPartOf: { '@type': 'Course', name: discipline.title },
-    },
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'LearningResource',
+        name: cleanTitle(lesson.title),
+        description,
+        inLanguage: 'pt-BR',
+        isPartOf: { '@type': 'Course', name: discipline.title },
+      },
+      breadcrumbList([
+        breadcrumbItem(1, SITE_NAME, PROD_ORIGIN),
+        breadcrumbItem(2, discipline.title, canonicalUrl(`/${discipline.slug}`)),
+        breadcrumbItem(3, cleanTitle(lesson.title), canonicalUrl(`/${discipline.slug}/${lesson.id}`)),
+      ]),
+    ],
   }
 }
 
