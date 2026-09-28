@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Offcanvas } from 'bootstrap'
 import type { Discipline } from '@/types/content'
 import { cleanTitle, mediaLabel } from '@/lib/lesson-format'
 
@@ -36,9 +35,16 @@ const props = defineProps<{ discipline: Discipline; activeId: string }>()
 // Fechamos o offcanvas via API em vez de `data-bs-dismiss`: o handler de dismiss
 // do Bootstrap roda na fase de captura e dá preventDefault em <a>, o que barra a
 // navegação do RouterLink. Sem o atributo, o link navega; aqui só fechamos o drawer.
+//
+// O `bootstrap` acessa window/document já no carregamento do módulo, então não
+// pode ser importado estaticamente (quebraria a pré-renderização SSR desta view).
+// Importamos sob demanda, só no cliente; no cliente o módulo já foi carregado por
+// main.ts, então é a MESMA instância que `Offcanvas.getInstance()` conhece.
 const root = ref<HTMLElement | null>(null)
-function close() {
-  if (root.value) Offcanvas.getInstance(root.value)?.hide()
+async function close() {
+  if (import.meta.env.SSR || !root.value) return
+  const { Offcanvas } = await import('bootstrap')
+  Offcanvas.getInstance(root.value)?.hide()
 }
 const progress = computed(() => {
   const i = props.discipline.lessons.findIndex((l) => l.id === props.activeId)
