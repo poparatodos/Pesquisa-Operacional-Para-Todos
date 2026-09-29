@@ -37,5 +37,8 @@
     "vite-ssg": "^28.3.0",
     "vitest": "^4.1.11",
     "vue-tsc": "^2.2.12"
+  },
+  "overrides": {
+    "vite": "$vite"
   }
 }
