@@ -10,6 +10,7 @@ for (const d of Object.values(disciplines)) {
   errors = errors.concat(validateDiscipline(d))
   for (const lesson of d.lessons) {
     for (const m of lesson.materials) {
+      if (m.kind === 'link') continue
       const path = publicDir + m.url
       if (!existsSync(path)) errors.push(`[${d.slug}/${lesson.id}] material ausente: ${m.url}`)
     }

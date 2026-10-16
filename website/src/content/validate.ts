@@ -15,6 +15,12 @@ export function validateDiscipline(d: Discipline): string[] {
         errors.push(`[${d.slug}/${lesson.id}] youtubeId inválido: "${v.youtubeId}" (${v.title})`)
       }
     }
+    for (const m of lesson.materials) {
+      const external = /^https?:\/\//.test(m.url)
+      if (external !== (m.kind === 'link')) {
+        errors.push(`[${d.slug}/${lesson.id}] material "${m.title}": URL externa exige kind 'link' (e vice-versa)`)
+      }
+    }
   }
   return errors
 }

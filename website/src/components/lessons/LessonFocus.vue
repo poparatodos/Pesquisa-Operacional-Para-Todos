@@ -5,16 +5,16 @@
       <nav class="focus__crumb" aria-label="Navegação estrutural">
         <RouterLink :to="`/${discipline.slug}`" class="focus__crumb-link">{{ discipline.title }}</RouterLink>
         <i class="bi bi-chevron-right focus__crumb-sep" aria-hidden="true"></i>
-        <span class="focus__crumb-current">Aula {{ position }} de {{ discipline.lessons.length }}</span>
+        <span class="focus__crumb-current">{{ crumbLabel }}</span>
       </nav>
       <button class="app-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#lessonDrawer">
-        <i class="bi bi-list-ul"></i> Aulas ({{ position }}/{{ discipline.lessons.length }})
+        <i class="bi bi-list-ul"></i> Aulas<template v-if="lesson.number > 0"> ({{ lesson.number }}/{{ totalAulas }})</template>
       </button>
     </div>
 
     <h1 class="focus__title">{{ cleanTitle(lesson.title) }}</h1>
 
-    <div class="focus__player">
+    <div v-if="lesson.videos.length || !lesson.materials.length" class="focus__player">
       <VideoTabs v-if="lesson.videos.length > 1" :videos="lesson.videos" />
       <LiteYouTube v-else-if="lesson.videos.length === 1" :youtube-id="lesson.videos[0].youtubeId" :title="lesson.videos[0].title" />
       <div v-else class="app-video-empty">O vídeo desta aula será disponibilizado em breve.</div>
@@ -53,7 +53,11 @@ import { cleanTitle, topicList } from '@/lib/lesson-format'
 const props = defineProps<{ discipline: Discipline; lesson: Lesson }>()
 
 const idx = computed(() => props.discipline.lessons.findIndex((l) => l.id === props.lesson.id))
-const position = computed(() => idx.value + 1)
+// A Apostila da Disciplina (number 0) não conta como aula na numeração "Aula N de M".
+const totalAulas = computed(() => props.discipline.lessons.filter((l) => l.number > 0).length)
+const crumbLabel = computed(() =>
+  props.lesson.number > 0 ? `Aula ${props.lesson.number} de ${totalAulas.value}` : cleanTitle(props.lesson.title),
+)
 const topics = computed(() => topicList(props.lesson.topics))
 const prev = computed(() => (idx.value > 0 ? props.discipline.lessons[idx.value - 1] : null))
 const next = computed(() =>
