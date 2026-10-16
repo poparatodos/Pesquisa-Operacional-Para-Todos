@@ -1,6 +1,12 @@
+/** Tipo de um Material; define ícone, ordem na lista e se é arquivo ou link externo. */
+export type MaterialKind = 'slides' | 'apostila' | 'lista' | 'gabarito' | 'link'
+
 export interface Material {
   title: string
+  /** Caminho em `public/` (ex.: `/materiais/po1/x.pdf`) ou URL absoluta quando `kind` é `link`. */
   url: string
+  /** Padrão: `slides`. */
+  kind?: MaterialKind
 }
 
 export interface VideoPart {

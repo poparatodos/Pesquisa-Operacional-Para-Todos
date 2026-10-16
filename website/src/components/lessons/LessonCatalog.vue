@@ -19,13 +19,13 @@
       >
         <div class="d-flex align-items-center gap-3 mb-2">
           <span class="app-num">{{ l.number }}</span>
-          <span class="app-badge" :class="{ 'app-badge--accent': !l.videos.length }">{{ mediaLabel(l) }}</span>
+          <span class="app-badge" :class="{ 'app-badge--accent': !l.videos.length && !l.materials.length }">{{ mediaLabel(l) }}</span>
         </div>
         <h3 class="catalog__card-title">{{ cleanTitle(l.title) }}</h3>
         <div class="catalog__chips">
           <span v-for="t in topicList(l.topics).slice(0, 2)" :key="t" class="app-chip">{{ t }}</span>
         </div>
-        <span class="catalog__go">Assistir <i class="bi bi-arrow-right"></i></span>
+        <span class="catalog__go">{{ l.videos.length ? 'Assistir' : 'Ver material' }} <i class="bi bi-arrow-right"></i></span>
       </RouterLink>
     </div>
   </main>

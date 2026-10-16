@@ -16,7 +16,7 @@ export function topicList(topics?: string): string[] {
 
 /** Rótulo curto de mídia de uma aula, sem inventar duração. */
 export function mediaLabel(lesson: Lesson): string {
-  if (!lesson.videos.length) return 'Em breve'
+  if (!lesson.videos.length) return lesson.materials.length ? 'Material' : 'Em breve'
   if (lesson.videos.length === 1) return 'Vídeo'
   return `${lesson.videos.length} partes`
 }

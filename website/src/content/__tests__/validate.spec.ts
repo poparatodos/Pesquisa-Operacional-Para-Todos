@@ -32,4 +32,13 @@ describe('validateDiscipline', () => {
     const d: Discipline = { ...base, lessons: [base.lessons[0], base.lessons[0]] }
     expect(validateDiscipline(d).join(' ')).toContain('duplicado')
   })
+  it('reporta URL externa sem kind link e link sem URL externa', () => {
+    const withMaterials = (materials: Discipline['lessons'][0]['materials']): Discipline => ({
+      ...base,
+      lessons: [{ ...base.lessons[0], materials }],
+    })
+    expect(validateDiscipline(withMaterials([{ title: 'X', url: 'https://x.org/' }])).join(' ')).toContain("kind 'link'")
+    expect(validateDiscipline(withMaterials([{ title: 'X', url: '/x.pdf', kind: 'link' }])).join(' ')).toContain("kind 'link'")
+    expect(validateDiscipline(withMaterials([{ title: 'X', url: 'https://x.org/', kind: 'link' }]))).toEqual([])
+  })
 })
