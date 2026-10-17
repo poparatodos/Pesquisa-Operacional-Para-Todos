@@ -81,6 +81,41 @@ Outros scripts (`package.json`):
 
 ---
 
+## 🌐 Deploy de produção
+
+Quem publica é o **próprio servidor da UNIRIO**, com o script
+[`ops/deploy-servidor.sh`](ops/deploy-servidor.sh). Todo dia à **00:00** (cron) ele
+puxa a `main`; se houver commit novo, roda `npm ci` + testes + build + gate de SEO e
+só então sincroniza o `dist/` no DocumentRoot do Apache. Se algo falhar, nada é
+publicado e o site continua na versão anterior.
+
+Instalação (uma vez, no servidor, como o usuário de deploy; pede `sudo` só para
+ajustar as permissões do DocumentRoot):
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/poparatodos/Pesquisa-Operacional-Para-Todos/main/ops/deploy-servidor.sh
+bash deploy-servidor.sh instalar
+```
+
+Também uma vez: habilitar o `.htaccess` no Apache com
+[`ops/apache/pesquisaoperacional.conf`](ops/apache/pesquisaoperacional.conf) (instruções no
+próprio arquivo). Sem ele as URLs das aulas (`/po1/aula-5`) dão 404 e `/po1` lista a pasta.
+
+Pré-requisitos: `git`, `rsync`, `flock`, `cron` e Node `^22.22.2 || ^24.15.0 || >=26`
+(ex.: `nvm install 24`). Depois disso, o dia a dia é:
+
+| Comando (`~/po-deploy/bin/deploy-servidor.sh …`) | O que faz |
+|---|---|
+| `status` | versão no ar, última da `main`, releases guardadas e fim do log |
+| `executar --forcar` | publica agora, sem esperar a meia-noite |
+| `reverter` | volta para a release anterior e não republica aquele commit até entrar outro na `main` |
+| `desinstalar` | remove o cron (mantém site e arquivos) |
+
+Logs ficam em `~/po-deploy/logs/`. O workflow *Gate Prod* do GitHub roda os mesmos
+testes/build/gate a cada push na `main` como aviso antecipado.
+
+---
+
 ## ➕ Como adicionar conteúdo
 
 O conteúdo é **dado tipado**, não HTML. Para adicionar/editar aulas basta mexer nos
@@ -106,6 +141,8 @@ Abra `src/content/po1.ts` (ou `po2.ts`) e acrescente um item ao array `lessons`:
 
 - Uma aula pode ter **várias partes** (`videos: [...]`) ou nenhuma (estado "em breve").
 - Materiais de apoio vão em `website/public/materiais/…` e são referenciados por URL absoluta.
+  O campo opcional `kind` (`slides` · `apostila` · `lista` · `gabarito` · `link`) define ícone e
+  ordem; `link` é para sites externos (URL `https://…`).
 - Rode `npm run validate:content` para conferir.
 
 ### Criar uma nova disciplina

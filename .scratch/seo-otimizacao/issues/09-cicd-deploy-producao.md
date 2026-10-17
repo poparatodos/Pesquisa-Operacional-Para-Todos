@@ -11,3 +11,12 @@
 - [ ] Credenciais SSH (host, usuário, chave privada) e o caminho do `DocumentRoot` lidos de **GitHub Secrets** — nada de segredo no repositório
 - [ ] O workflow de homologação no GitHub Pages permanece funcional em paralelo (disparo manual / branches)
 - [ ] **Dependências operacionais a confirmar com o mantenedor antes do primeiro deploy** (fora do código): caminho do `DocumentRoot`; host/usuário/chave SSH cadastrados como Secrets; DNS de `pesquisaoperacional.uniriotec.br` apontando para o servidor com HTTPS válido
+
+## Atualização (2026-10-16): push via SSH substituído por pull no servidor
+
+O job de `rsync` sobre SSH nunca funcionou: o GitHub Actions não alcança o servidor
+(o `ssh-keyscan` falhava em todo push). O deploy passou a ser feito pelo próprio
+servidor com `ops/deploy-servidor.sh` (cron 00:00 → pull da `main` → testes + build +
+gate de SEO → `rsync` local para o DocumentRoot). O workflow virou só *Gate Prod*
+(testes/build/SEO em cada push) e os secrets `SSH_*` foram removidos. O `.htaccess`
+só passa a valer com `ops/apache/pesquisaoperacional.conf` instalado no Apache.

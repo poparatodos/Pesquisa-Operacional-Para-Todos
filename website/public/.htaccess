@@ -19,16 +19,19 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteBase /
 
-  # Arquivos e diretórios existentes passam direto (inclui os .html, assets, etc.).
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
   # Clean-URL: /po1/aula-5 -> po1/aula-5.html quando o .html existe. Só reescreve
   # se a versão com extensão for um arquivo real; caso contrário cai no
   # ErrorDocument 404 acima. NÃO existe mais catch-all para /index.html.
-  RewriteCond %{REQUEST_FILENAME}\.html -f
+  # Vem ANTES do repasse de diretórios: /po1 é ao mesmo tempo po1.html (catálogo)
+  # e a pasta po1/ (das aulas); se a pasta ganhasse, o Apache redirecionaria
+  # para /po1/ e devolveria 403 (pasta sem index) em vez do catálogo.
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
+
+  # Demais arquivos e diretórios existentes passam direto (assets, materiais...).
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
 </IfModule>
 
 # Ambiente duplo (raciocínio):
